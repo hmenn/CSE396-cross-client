@@ -1,5 +1,8 @@
+#include <iostream>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+
+using namespace std;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -11,4 +14,9 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+
+void MainWindow::on_btn_conn_clicked(){
+    std::cout<<"conn";
 }
