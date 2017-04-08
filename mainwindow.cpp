@@ -9,11 +9,22 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    connection = new Connection(ip, port);
+    comThread = new CommunicationThread(this);
+
+    comThread->mutex = &mutex;
+    comThread->request = &request;
+    comThread->message = &message;
+    comThread->connection = connection;
+
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete connection;
+    delete comThread;
 }
 
 

@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "requirements.h"
 
 namespace Ui {
 class MainWindow;
@@ -17,6 +18,19 @@ public:
 
 private:
     Ui::MainWindow *ui;
+
+    QMutex mutex;
+    QString message;
+    int request;
+
+    CommunicationThread *comThread;
+    Connection *connection;
+
+    QString ip;
+    QString port;
+
+    RequestType requestType;
+
 
 private slots:
     void on_btn_conn_clicked();
