@@ -5,8 +5,6 @@
 #include <QString>
 #include <QException>
 #include "exceptions396.h"
-#include "connection.h"
-#include "requesttype.h"
-#include "communicationthread.h"
+#include "constants.h"
 
 #endif // REQUIREMENTS_H

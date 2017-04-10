@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -32,7 +32,7 @@ HEADERS  += mainwindow.h \
     connection.h \
     exceptions396.h \
     requirements.h \
-    requesttype.h \
+    constants.h
     communicationthread.h
 
 FORMS    += mainwindow.ui

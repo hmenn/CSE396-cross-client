@@ -1,4 +1,6 @@
 #include <iostream>
+#include <QProgressBar>
+#include <QProgressDialog>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -29,5 +31,18 @@ MainWindow::~MainWindow()
 
 
 void MainWindow::on_btn_conn_clicked(){
-    std::cout<<"conn";
+    QString ip;
+    ui->btn_conn->setEnabled(false);
+
+    try{
+        ip = ui->ledit_ip->text();
+        connection=new Connection(ip);
+    }catch(exception &e){
+
+    }
+
+
+
+
+
 }

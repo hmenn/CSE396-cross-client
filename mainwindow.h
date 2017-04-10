@@ -18,6 +18,7 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    Connection *connection;
 
     QMutex mutex;
     QString message;
