@@ -32,7 +32,8 @@ HEADERS  += mainwindow.h \
     connection.h \
     exceptions396.h \
     requirements.h \
-    constants.h
+    constants.h \
+    communicationthread.h
     communicationthread.h
 
 FORMS    += mainwindow.ui

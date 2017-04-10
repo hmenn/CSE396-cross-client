@@ -2,6 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QMutex>
+#include "communicationthread.h"
+#include "connection.h"
 #include "requirements.h"
 
 namespace Ui {
@@ -25,12 +28,10 @@ private:
     int request;
 
     CommunicationThread *comThread;
-    Connection *connection;
 
     QString ip;
     QString port;
-
-    RequestType requestType;
+    int requestType;
 
 
 private slots:

@@ -14,6 +14,12 @@ public:
     Connection(QString ip) throw (InvalidConnectionException);
     void sendRequest(QString message) throw (exception);
 
+signals:
+public slots:
+    void connected();
+    void disconnected();
+    void bytesWritten(qint64 bytes);
+    void readyRead();
 
 private:
     QString ipAddr;

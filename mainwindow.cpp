@@ -12,14 +12,12 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    connection = new Connection(ip, port);
+    /* initialize connection thread */
     comThread = new CommunicationThread(this);
-
     comThread->mutex = &mutex;
     comThread->request = &request;
     comThread->message = &message;
     comThread->connection = connection;
-
 }
 
 MainWindow::~MainWindow()
@@ -35,14 +33,14 @@ void MainWindow::on_btn_conn_clicked(){
     ui->btn_conn->setEnabled(false);
 
     try{
+        //throw InvalidConnectionException();
         ip = ui->ledit_ip->text();
-        connection=new Connection(ip);
+        connection=new Connection("bogotobogo.com");
+        comThread->start();
     }catch(exception &e){
-
+        qDebug()<<e.what();
+        ui->tb_messages->append(e.what());
+        ui->btn_conn->setEnabled(true);
     }
-
-
-
-
 
 }

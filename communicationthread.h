@@ -2,6 +2,8 @@
 #define COMMUNICATIONTHREAD_H
 
 #include <QThread>
+#include <QMutex>
+#include "connection.h"
 #include "requirements.h"
 
 
@@ -19,7 +21,7 @@ public:
     Connection *connection;
 
 private:
-    RequestType requestType;
+    int requestType;
 };
 
 #endif // COMMUNICATIONTHREAD_H
