@@ -12,6 +12,7 @@ class Connection
 {
 public:
     Connection(QString ip) throw (InvalidConnectionException);
+    ~Connection();
     void sendRequest(QString message) throw (exception);
 
 signals:

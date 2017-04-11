@@ -6,28 +6,33 @@ using namespace std;
 
 Connection::Connection(const QString ip) throw (InvalidConnectionException)
 {
-
     tcpSocket = new QTcpSocket();
-
    /* connect(tcpSocket, SIGNAL(connected()),this, SLOT(connected()));
     connect(tcpSocket, SIGNAL(disconnected()),this, SLOT(disconnected()));
     connect(tcpSocket, SIGNAL(bytesWritten(qint64)),this, SLOT(bytesWritten(qint64)));
     connect(tcpSocket, SIGNAL(readyRead()),this, SLOT(readyRead()));
 */
-    tcpSocket->connectToHost(ip,80);
+    tcpSocket->connectToHost(ip,Constants::PORT);
 
-    qDebug()<<"Here";
-
-    if(tcpSocket->waitForConnected(1000)){
+    if(tcpSocket->waitForConnected(3000)){
         qDebug()<<"Connected";
     }else{
         throw InvalidConnectionException();
     }
 }
 
+Connection::~Connection(){
+    if(tcpSocket!=NULL){
+        tcpSocket->close();
+        delete tcpSocket;
+        tcpSocket=NULL;
+    }
+    qDebug()<<"Connection destructed";
+}
+
 
 void Connection::sendRequest(QString message) throw (exception){
-
+    tcpSocket->write(message.toStdString().c_str());
 }
 
 void Connection::connected()

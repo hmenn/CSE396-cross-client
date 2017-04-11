@@ -36,6 +36,7 @@ private:
 
 private slots:
     void on_btn_conn_clicked();
+    void on_btn_disconn_clicked();
 };
 
 #endif // MAINWINDOW_H
