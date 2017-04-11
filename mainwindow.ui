@@ -38,6 +38,9 @@
     </property>
    </widget>
    <widget class="QGroupBox" name="grp_steps">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -211,7 +214,7 @@
      </property>
     </widget>
    </widget>
-   <widget class="QGroupBox" name="groupBox">
+   <widget class="QGroupBox" name="grp_connection">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -269,6 +272,9 @@
      </property>
     </widget>
     <widget class="QPushButton" name="btn_disconn">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
      <property name="geometry">
       <rect>
        <x>130</x>
@@ -307,7 +313,10 @@
      </property>
     </widget>
    </widget>
-   <widget class="QGroupBox" name="groupBox_2">
+   <widget class="QGroupBox" name="grp_system">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>260</x>

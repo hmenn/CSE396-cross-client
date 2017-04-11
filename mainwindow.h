@@ -20,6 +20,11 @@ public:
     ~MainWindow();
 
 private:
+    void disableUI();
+    void enableUI();
+
+
+
     Ui::MainWindow *ui;
     Connection *connection;
 
