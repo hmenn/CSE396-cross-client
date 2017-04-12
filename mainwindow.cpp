@@ -56,6 +56,7 @@ void MainWindow::on_btn_conn_clicked(){
         connection=new Connection(ip);
         comThread->connection = connection;
         connection->sendRequest("Hello Clion");
+        connection->readRequest();
        // comThread->start();
 
         enableUI();

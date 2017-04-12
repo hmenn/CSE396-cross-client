@@ -14,6 +14,7 @@ public:
     Connection(QString ip) throw (InvalidConnectionException);
     ~Connection();
     void sendRequest(QString message) throw (exception);
+    void readRequest() throw (exception);
 
 signals:
 public slots:
