@@ -7,57 +7,106 @@ CommunicationThread::CommunicationThread(QObject* parent):QThread(parent)
 
 void CommunicationThread::run()
 {
+    int delayCounter = 0;
+
     while(1){
+
+        //delay as milliseconds
+        msleep(100);
+
+        //mutex lock
+        mutex->lock();
 
         switch (*request) {
 
         case Constants::REQ_OPEN_CONNECTION:
 
-            mutex->lock();
+            message->clear();
+            message->append(QString::number(*request));
+            message->append(Constants::DELIMITER);
             connection->sendRequest(*message);
-            //...
-            mutex->unlock();
+
+            *request = Constants::REQ_ASK_CURRENT_COORDS;
 
             break;
 
         case Constants::REQ_CLOSE_CONNECTION:
 
-            mutex->lock();
+            message->clear();
+            message->append(QString::number(*request));
+            message->append(Constants::DELIMITER);
             connection->sendRequest(*message);
-            //...
-            mutex->unlock();
+
+            *request = Constants::REQ_ASK_CURRENT_COORDS;
 
             break;
 
         case Constants::REQ_ASK_CURRENT_COORDS:
 
-            mutex->lock();
+            message->clear();
+            message->append(QString::number(*request));
+            message->append(Constants::DELIMITER);
             connection->sendRequest(*message);
-            //...
-            mutex->unlock();
+
+            // not necessary
+            *request = Constants::REQ_ASK_CURRENT_COORDS;
 
             break;
 
         case Constants::REQ_ASK_CURRENT_IMAGE:
 
-            mutex->lock();
+            message->clear();
+            message->append(QString::number(*request));
+            message->append(Constants::DELIMITER);
             connection->sendRequest(*message);
-            //...
-            mutex->unlock();
+
+            //image will be saved into memory
+            //necessary a loop here to takes the image
+            //..
+
+            *request = Constants::REQ_ASK_CURRENT_COORDS;
 
             break;
 
         case Constants::REQ_UPDATE_COORDS:
 
-            mutex->lock();
+            message->clear();
+            message->append(QString::number(*request));
+            message->append(Constants::DELIMITER);
+            //append coordinate 1 message->append(QString::number(xCoordiante))
+            //message->append(Constants::DELIMITER);
+            //append coordinate 2 message->append(QString::number(xCoordiante))
             connection->sendRequest(*message);
-            //...
-            mutex->unlock();
+
+            //get coordinates process
+            //connection->readRequest()
+            //parse and set coordinate values
+
+            *request = Constants::REQ_ASK_CURRENT_COORDS;
 
             break;
 
         default:
             break;
         }
+
+        //mutex unlock
+        mutex->unlock();
+
+        //increment delayCounter
+        ++delayCounter;
+
+        //every 10 times assign REQ_ASK_CURRENT_IMAGE to request
+        if(delayCounter%10 == 0){
+            mutex->lock();
+
+            *request = Constants::REQ_ASK_CURRENT_IMAGE;
+            qDebug() << "Update request to get image";
+            qDebug() << *request;
+
+            mutex->unlock();
+
+        }
+
     }
 }

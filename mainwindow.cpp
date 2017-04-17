@@ -16,11 +16,18 @@ MainWindow::MainWindow(QWidget *parent) :
     /* Connection part */
     connection=NULL;
 
+    // initialization message
+    request = Constants::REQ_OPEN_CONNECTION;
+    message.append(QString::number(request));
+    message.append(Constants::DELIMITER);
+    qDebug() << message.toStdString().c_str();
+
     /* initialize connection thread */
     comThread = new CommunicationThread(this);
     comThread->mutex = &mutex;
     comThread->request = &request;
     comThread->message = &message;
+   // comThread->start();
 
 }
 
@@ -55,9 +62,10 @@ void MainWindow::on_btn_conn_clicked(){
         ip = ui->ledit_ip->text();
         connection=new Connection(ip);
         comThread->connection = connection;
-        connection->sendRequest("Hello Clion");
-        connection->readRequest();
-       // comThread->start();
+        connection->sendRequest("Hello Clion1");
+        connection->sendRequest("Hello Clion2");
+     //   connection->readRequest();
+        comThread->start();
 
         enableUI();
     }catch(exception &e){
@@ -70,6 +78,7 @@ void MainWindow::on_btn_conn_clicked(){
 void MainWindow::on_btn_disconn_clicked(){
 
     if(connection!=NULL){
+    //    comThread->terminate();
         delete connection;
         connection=NULL;
     }

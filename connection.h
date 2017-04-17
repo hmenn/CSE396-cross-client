@@ -1,8 +1,8 @@
 #ifndef CONNECTION_H
 #define CONNECTION_H
 
-#include <sys/socket.h>
-#include <netinet/in.h>
+//#include <sys/socket.h>
+//#include <netinet/in.h>
 #include <QTcpSocket>
 #include "requirements.h"
 

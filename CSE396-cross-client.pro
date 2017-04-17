@@ -33,7 +33,6 @@ HEADERS  += mainwindow.h \
     exceptions396.h \
     requirements.h \
     constants.h \
-    communicationthread.h
-    communicationthread.h
+    communicationthread.h \
 
 FORMS    += mainwindow.ui

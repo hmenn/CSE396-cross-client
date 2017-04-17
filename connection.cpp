@@ -33,12 +33,13 @@ Connection::~Connection(){
 
 void Connection::sendRequest(QString message) throw (exception){
     tcpSocket->write(message.toStdString().c_str());
+    qDebug() << "Sended : " << message.toStdString().c_str();
 }
 
 void Connection::readRequest() throw (exception){
     QByteArray msg;
     char buffer[50];
-    bzero(buffer,50);
+    //bzero(buffer,50);
 
     while(!tcpSocket->waitForReadyRead(500));
     msg = tcpSocket->read(5);
