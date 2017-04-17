@@ -78,7 +78,9 @@ void MainWindow::on_btn_conn_clicked(){
 void MainWindow::on_btn_disconn_clicked(){
 
     if(connection!=NULL){
-    //    comThread->terminate();
+        //comThread->terminate();
+        //bu tusa basildiginda program sonlandi hatasi veriyor baglantiyi
+        //düzgün bir sekilde kapatip thread i bu konu hakkinda bilgilendirmeliyiz
         delete connection;
         connection=NULL;
     }
