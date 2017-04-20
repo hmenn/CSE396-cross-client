@@ -16,11 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
     /* Connection part */
     connection=NULL;
 
-    // initialization message
-    request = Constants::REQ_OPEN_CONNECTION;
-    message.append(QString::number(request));
-    message.append(Constants::DELIMITER);
-    qDebug() << message.toStdString().c_str();
+
 
 
    // comThread->start();
@@ -58,6 +54,12 @@ void MainWindow::on_btn_conn_clicked(){
         ip = ui->ledit_ip->text();
         connection=new Connection(ip);
 
+        // initialization message
+        request = Constants::REQ_OPEN_CONNECTION;
+        message.append(QString::number(request));
+        message.append(Constants::DELIMITER);
+        qDebug() << message.toStdString().c_str();
+
         /* initialize connection thread */
         comThread = new CommunicationThread(this);
         comThread->mutex = &mutex;
@@ -91,6 +93,8 @@ void MainWindow::on_btn_disconn_clicked(){
         mutex.lock();
         request = Constants::REQ_CLOSE_CONNECTION;
         mutex.unlock();
+
+
 
         //connection=NULL;
     }

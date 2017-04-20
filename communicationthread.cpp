@@ -10,9 +10,9 @@ void CommunicationThread::run()
     int delayCounter = 0;
 
     while(1){
-
+    qDebug() << "\nI am in \n";
         //delay as milliseconds
-       // msleep(1000);
+        msleep(100);
 
         //mutex lock
         mutex->lock();
@@ -43,6 +43,7 @@ void CommunicationThread::run()
 
             //wait moduna gececek
             mutex->unlock();
+
             terminate();
 
             *request = Constants::REQ_ASK_CURRENT_COORDS;
