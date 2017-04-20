@@ -32,8 +32,9 @@ Connection::~Connection(){
 
 
 void Connection::sendRequest(QString message) throw (exception){
-    tcpSocket->write(message.toStdString().c_str());
+    int byte = tcpSocket->write(message.toStdString().c_str());
     qDebug() << "Sended : " << message.toStdString().c_str();
+    qDebug() << "Byte : " << byte;
 }
 
 void Connection::readRequest() throw (exception){
@@ -55,8 +56,14 @@ void Connection::connected()
 }
 
 void Connection::disconnected()
-{
-    qDebug() << "disconnected...";
+{    
+    tcpSocket->disconnect();
+        tcpSocket->disconnectFromHost();
+        tcpSocket->deleteLater();
+        tcpSocket = nullptr;
+
+ //   delete tcpSocket;
+    qDebug() << "Socket was closed...";
 }
 
 void Connection::bytesWritten(qint64 bytes)

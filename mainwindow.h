@@ -28,6 +28,7 @@ private:
     Ui::MainWindow *ui;
     Connection *connection;
 
+    //QChar data[10];
     QMutex mutex;
     QString message;
     int request;

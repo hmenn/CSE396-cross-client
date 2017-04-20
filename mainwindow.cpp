@@ -22,11 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
     message.append(Constants::DELIMITER);
     qDebug() << message.toStdString().c_str();
 
-    /* initialize connection thread */
-    comThread = new CommunicationThread(this);
-    comThread->mutex = &mutex;
-    comThread->request = &request;
-    comThread->message = &message;
+
    // comThread->start();
 
 }
@@ -61,11 +57,20 @@ void MainWindow::on_btn_conn_clicked(){
         //throw InvalidConnectionException();
         ip = ui->ledit_ip->text();
         connection=new Connection(ip);
+
+        /* initialize connection thread */
+        comThread = new CommunicationThread(this);
+        comThread->mutex = &mutex;
+        comThread->request = &request;
+        comThread->message = &message;
+
+
         comThread->connection = connection;
         connection->sendRequest("Hello Clion1");
         connection->sendRequest("Hello Clion2");
      //   connection->readRequest();
         comThread->start();
+
 
         enableUI();
     }catch(exception &e){
@@ -81,8 +86,13 @@ void MainWindow::on_btn_disconn_clicked(){
         //comThread->terminate();
         //bu tusa basildiginda program sonlandi hatasi veriyor baglantiyi
         //düzgün bir sekilde kapatip thread i bu konu hakkinda bilgilendirmeliyiz
-        delete connection;
-        connection=NULL;
+       // delete connection;
+
+        mutex.lock();
+        request = Constants::REQ_CLOSE_CONNECTION;
+        mutex.unlock();
+
+        //connection=NULL;
     }
 
     disableUI();

@@ -14,7 +14,7 @@ public:
     static const char DELIMITER=',';
 
     /*Connection*/
-    static const int PORT=333;
+    static const int PORT=3965;
 };
 
 #endif // CONSTANTS_H

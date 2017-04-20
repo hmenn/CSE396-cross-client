@@ -12,7 +12,7 @@ void CommunicationThread::run()
     while(1){
 
         //delay as milliseconds
-        msleep(100);
+       // msleep(1000);
 
         //mutex lock
         mutex->lock();
@@ -36,6 +36,14 @@ void CommunicationThread::run()
             message->append(QString::number(*request));
             message->append(Constants::DELIMITER);
             connection->sendRequest(*message);
+
+            connection->disconnected();
+            usleep(1000);
+            delete connection;
+
+            //wait moduna gececek
+            mutex->unlock();
+            terminate();
 
             *request = Constants::REQ_ASK_CURRENT_COORDS;
 
