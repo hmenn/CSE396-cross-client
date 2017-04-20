@@ -16,13 +16,6 @@ public:
     void sendRequest(QString message) throw (exception);
     void readRequest() throw (exception);
 
-signals:
-public slots:
-    void connected();
-    void disconnected();
-    void bytesWritten(qint64 bytes);
-    void readyRead();
-
 private:
     QString ipAddr;
     QTcpSocket *tcpSocket;

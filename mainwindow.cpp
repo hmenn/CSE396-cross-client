@@ -16,9 +16,6 @@ MainWindow::MainWindow(QWidget *parent) :
     /* Connection part */
     connection=NULL;
 
-
-
-
    // comThread->start();
 
 }
@@ -94,9 +91,10 @@ void MainWindow::on_btn_disconn_clicked(){
         request = Constants::REQ_CLOSE_CONNECTION;
         mutex.unlock();
 
-
-
-        //connection=NULL;
+        //delete connection;
+        while(comThread->isRunning());
+        delete connection;
+        connection=NULL;
     }
 
     disableUI();
