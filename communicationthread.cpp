@@ -9,10 +9,8 @@ void CommunicationThread::run()
 {
     int delayCounter = 0;
 
-
-
     while(*request != Constants::REQ_CLOSE_CONNECTION){
-    qDebug() << "\nI am in \n";
+
         //delay as milliseconds
         msleep(1000);
 
@@ -21,78 +19,64 @@ void CommunicationThread::run()
 
         switch (*request) {
 
-            case Constants::REQ_OPEN_CONNECTION:
+        case Constants::REQ_OPEN_CONNECTION:
 
-                message->clear();
-                message->append(QString::number(*request));
-                message->append(Constants::DELIMITER);
-                connection->sendRequest(*message);
+            message->clear();
+            message->append(QString::number(*request));
+            message->append(Constants::DELIMITER);
+            connection->sendRequest(*message);
 
-                *request = Constants::REQ_ASK_CURRENT_COORDS;
+            *request = Constants::REQ_ASK_CURRENT_COORDS;
 
-                break;
+            break;
 
-            case Constants::REQ_CLOSE_CONNECTION:
+        case Constants::REQ_CLOSE_CONNECTION:
 
-                message->clear();
-                message->append(QString::number(*request));
-                message->append(Constants::DELIMITER);
-                connection->sendRequest(*message);
+            message->clear();
+            message->append(QString::number(*request));
+            message->append(Constants::DELIMITER);
+            connection->sendRequest(*message);
 
-                //*request = Constants::REQ_ASK_CURRENT_COORDS;
-                //wait moduna gececek
-                break;
+            break;
 
-            case Constants::REQ_ASK_CURRENT_COORDS:
+        case Constants::REQ_ASK_CURRENT_COORDS:
 
-                message->clear();
-                message->append(QString::number(*request));
-                message->append(Constants::DELIMITER);
-                connection->sendRequest(*message);
+            message->clear();
+            message->append(QString::number(*request));
+            message->append(Constants::DELIMITER);
+            connection->sendRequest(*message);
 
-                // not necessary
-                *request = Constants::REQ_ASK_CURRENT_COORDS;
+            // not necessary
+            *request = Constants::REQ_ASK_CURRENT_COORDS;
 
-                break;
+            break;
 
-            case Constants::REQ_ASK_CURRENT_IMAGE:
+        case Constants::REQ_ASK_CURRENT_IMAGE:
 
-                message->clear();
-                message->append(QString::number(*request));
-                message->append(Constants::DELIMITER);
-                connection->sendRequest(*message);
+            message->clear();
+            message->append(QString::number(*request));
+            message->append(Constants::DELIMITER);
+            connection->sendRequest(*message);
 
-                //image will be saved into memory
-                //necessary a loop here to takes the image
-                //..
+            //image will be saved into memory
+            //necessary a loop here to takes the image
+            //..
 
-                *request = Constants::REQ_ASK_CURRENT_COORDS;
+            *request = Constants::REQ_ASK_CURRENT_COORDS;
 
-                break;
+            break;
 
-            case Constants::REQ_UPDATE_COORDS:
+        case Constants::REQ_UPDATE_COORDS:
 
-              /*  message->clear();
-                message->append(QString::number(*request));
-                message->append(Constants::DELIMITER);*/
-                //append coordinate 1 message->append(QString::number(xCoordiante))
-                //message->append(Constants::DELIMITER);
-                //append coordinate 2 message->append(QString::number(xCoordiante))
-                connection->sendRequest(*message);
+            connection->sendRequest(*message);
 
-                //get coordinates process
-                //connection->readRequest()
-                //parse and set coordinate values
+            *request = Constants::REQ_ASK_CURRENT_COORDS;
 
-                *request = Constants::REQ_ASK_CURRENT_COORDS;
+            break;
 
-                break;
-
-            default:
-                break;
+        default:
+            break;
         }
-
-      // connection->readRequest();
 
         //mutex unlock
         mutex->unlock();

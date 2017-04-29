@@ -80,7 +80,7 @@
       <string>Y Direction</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="ledit_stepX1">
+    <widget class="QLineEdit" name="ledit_stepX">
      <property name="geometry">
       <rect>
        <x>10</x>

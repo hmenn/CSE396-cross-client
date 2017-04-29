@@ -16,8 +16,6 @@ MainWindow::MainWindow(QWidget *parent) :
     /* Connection part */
     connection=NULL;
     ui->tb_messages->append("");
-   // comThread->start();
-
 
 }
 
@@ -64,16 +62,11 @@ void MainWindow::on_btn_conn_clicked(){
         comThread->request = &request;
         comThread->message = &message;
 
-
         comThread->connection = connection;
-
-        /*connection->sendRequest("Hello Clion1");
-        connection->sendRequest("Hello Clion2");*/
 
         connection->sendRequest("Merhaba");
         connection->readRequest();
 
-      //  connection->readRequest();
         comThread->start();
 
 
@@ -89,11 +82,6 @@ void MainWindow::on_btn_conn_clicked(){
 void MainWindow::on_btn_disconn_clicked(){
 
     if(connection!=NULL){
-        //comThread->terminate();
-        //bu tusa basildiginda program sonlandi hatasi veriyor baglantiyi
-        //düzgün bir sekilde kapatip thread i bu konu hakkinda bilgilendirmeliyiz
-       // delete connection;
-
         mutex.lock();
         request = Constants::REQ_CLOSE_CONNECTION;
         mutex.unlock();
