@@ -7,6 +7,9 @@ CommunicationThread::CommunicationThread(QObject* parent):QThread(parent)
 
 void CommunicationThread::run()
 {
+    QByteArray msg;
+     char * coordinatesString;
+
     int delayCounter = 0;
 
     while(*request != Constants::REQ_CLOSE_CONNECTION){
@@ -24,7 +27,7 @@ void CommunicationThread::run()
             message->clear();
             message->append(QString::number(*request));
             message->append(Constants::DELIMITER);
-            connection->sendRequest(*message);
+           // connection->sendRequest(*message);
 
             *request = Constants::REQ_ASK_CURRENT_COORDS;
 
@@ -39,18 +42,27 @@ void CommunicationThread::run()
 
             break;
 
-        case Constants::REQ_ASK_CURRENT_COORDS:
+        case Constants::REQ_ASK_CURRENT_COORDS:{
 
             message->clear();
             message->append(QString::number(*request));
             message->append(Constants::DELIMITER);
             connection->sendRequest(*message);
 
+            connection->readRequest(&msg);
+            QString str(msg);
+            qDebug() << "Message byte array :" <<str;
+            //coordinatesString = msg.toStdString().c_str();
+            sscanf(str.toStdString().c_str(), "%d%d", xCoordinate, yCoordinate);
+            qDebug() << "\ncorrrr :" << coordinatesString;
+
+            this->updateCoordinates();
+            qDebug() << "\nX: " << *xCoordinate << "\nY: "<< *yCoordinate;
             // not necessary
             *request = Constants::REQ_ASK_CURRENT_COORDS;
 
             break;
-
+}
         case Constants::REQ_ASK_CURRENT_IMAGE:
 
             message->clear();
@@ -97,3 +109,7 @@ void CommunicationThread::run()
     }
     qDebug()<<"Thread quit";
 }
+/*
+void CommunicationThread::updateCoordinates(){
+
+}*/

@@ -14,7 +14,7 @@ public:
     Connection(QString ip) throw (InvalidConnectionException);
     ~Connection();
     void sendRequest(QString message) throw (exception);
-    void readRequest() throw (exception);
+    void readRequest(QByteArray * msg) throw (exception);
 
 private:
     QString ipAddr;

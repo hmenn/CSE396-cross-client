@@ -14,11 +14,19 @@ public:
     explicit CommunicationThread(QObject* parent=0);
     void run();
 
+
+
     QMutex *mutex;
     QString *message;
     int *request;
 
     Connection *connection;
+
+    int* xCoordinate;
+    int* yCoordinate;
+
+signals:
+    void updateCoordinates();
 
 private:
     int requestType;

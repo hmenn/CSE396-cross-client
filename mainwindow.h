@@ -39,14 +39,19 @@ private:
     QString port;
     int requestType;
 
+    int xCoor;
+    int yCoor;
+
 
 private slots:
+    void updateCoordinates();
     void on_btn_conn_clicked();
     void on_btn_disconn_clicked();
     void on_xNegative_clicked();
     void on_xPositive_clicked();
     void on_yPositive_clicked();
     void on_yNegative_clicked();
+    void on_sendButton_clicked();
 };
 
 #endif // MAINWINDOW_H

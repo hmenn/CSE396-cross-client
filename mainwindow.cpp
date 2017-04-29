@@ -3,6 +3,7 @@
 #include <QProgressDialog>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "communicationthread.h"
 
 using namespace std;
 
@@ -11,12 +12,23 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
     disableUI();
+
+    xCoor =0;
+    yCoor =0;
 
     /* Connection part */
     connection=NULL;
     ui->tb_messages->append("");
 
+
+
+}
+void MainWindow::updateCoordinates(){
+    cerr << " geidiiiiii " << xCoor;
+    ui->xCoordinate->setText(QString::number(xCoor));
+    ui->yCoordinate->setText(QString::number(yCoor));
 }
 
 void MainWindow::disableUI(){
@@ -54,18 +66,22 @@ void MainWindow::on_btn_conn_clicked(){
         request = Constants::REQ_OPEN_CONNECTION;
         message.append(QString::number(request));
         message.append(Constants::DELIMITER);
-        qDebug() << message.toStdString().c_str();
+        //qDebug() << message.toStdString().c_str();
 
         /* initialize connection thread */
         comThread = new CommunicationThread(this);
         comThread->mutex = &mutex;
         comThread->request = &request;
         comThread->message = &message;
+        comThread->xCoordinate = &this->xCoor;
+        comThread->yCoordinate = &this->yCoor;
+
+        connect(comThread,SIGNAL(updateCoordinates()),this,SLOT(updateCoordinates()));
 
         comThread->connection = connection;
 
-        connection->sendRequest("Merhaba");
-        connection->readRequest();
+        //connection->sendRequest("Merhaba");
+        //connection->readRequest();
 
         comThread->start();
 
@@ -103,7 +119,10 @@ void MainWindow::on_xPositive_clicked()
     message.clear();
     message.append(QString::number(request));
     message.append(Constants::DELIMITER);
-    message.append("+x");
+    message.append("1");
+    message.append(Constants::DELIMITER);
+    message.append("0");
+
     mutex.unlock();
 }
 
@@ -114,7 +133,10 @@ void MainWindow::on_xNegative_clicked()
     message.clear();
     message.append(QString::number(request));
     message.append(Constants::DELIMITER);
-    message.append("-x");
+    message.append("-1");
+    message.append(Constants::DELIMITER);
+    message.append("0");
+
     mutex.unlock();
 }
 
@@ -125,7 +147,9 @@ void MainWindow::on_yPositive_clicked()
     message.clear();
     message.append(QString::number(request));
     message.append(Constants::DELIMITER);
-    message.append("+y");
+    message.append("0");
+    message.append(Constants::DELIMITER);
+    message.append("1");
     mutex.unlock();
 }
 
@@ -136,6 +160,21 @@ void MainWindow::on_yNegative_clicked()
     message.clear();
     message.append(QString::number(request));
     message.append(Constants::DELIMITER);
-    message.append("-y");
+    message.append("0");
+    message.append(Constants::DELIMITER);
+    message.append("-1");
+    mutex.unlock();
+}
+
+void MainWindow::on_sendButton_clicked()
+{
+    mutex.lock();
+    request = Constants::REQ_UPDATE_COORDS;
+    message.clear();
+    message.append(QString::number(request));
+    message.append(Constants::DELIMITER);
+    message.append(ui->ledit_stepX->text());
+    message.append(Constants::DELIMITER);
+    message.append(ui->ledit_stepY->text());
     mutex.unlock();
 }

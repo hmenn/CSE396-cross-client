@@ -38,12 +38,12 @@ void Connection::sendRequest(QString message) throw (exception){
     tcpSocket->waitForBytesWritten();
 }
 
-void Connection::readRequest() throw (exception){
-    QByteArray msg;
+void Connection::readRequest(QByteArray *msg) throw (exception){
+    //QByteArray msg;
 
-    while(!tcpSocket->waitForReadyRead(500));
-    msg = tcpSocket->read(5);
-    qDebug()<<msg;
+    //while(!tcpSocket->waitForReadyRead(500));
+    *msg = tcpSocket->read(10);
+    qDebug()<< *msg;
 }
 
 
