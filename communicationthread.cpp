@@ -9,10 +9,12 @@ void CommunicationThread::run()
 {
     int delayCounter = 0;
 
+
+
     while(*request != Constants::REQ_CLOSE_CONNECTION){
     qDebug() << "\nI am in \n";
         //delay as milliseconds
-        msleep(100);
+        msleep(1000);
 
         //mutex lock
         mutex->lock();
@@ -70,9 +72,9 @@ void CommunicationThread::run()
 
             case Constants::REQ_UPDATE_COORDS:
 
-                message->clear();
+              /*  message->clear();
                 message->append(QString::number(*request));
-                message->append(Constants::DELIMITER);
+                message->append(Constants::DELIMITER);*/
                 //append coordinate 1 message->append(QString::number(xCoordiante))
                 //message->append(Constants::DELIMITER);
                 //append coordinate 2 message->append(QString::number(xCoordiante))
@@ -89,6 +91,8 @@ void CommunicationThread::run()
             default:
                 break;
         }
+
+      // connection->readRequest();
 
         //mutex unlock
         mutex->unlock();

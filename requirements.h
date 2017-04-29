@@ -6,5 +6,6 @@
 #include <QException>
 #include "exceptions396.h"
 #include "constants.h"
+#include <string>
 
 #endif // REQUIREMENTS_H

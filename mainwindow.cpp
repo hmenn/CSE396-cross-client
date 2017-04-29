@@ -15,8 +15,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     /* Connection part */
     connection=NULL;
-
+    ui->tb_messages->append("");
    // comThread->start();
+
 
 }
 
@@ -65,9 +66,14 @@ void MainWindow::on_btn_conn_clicked(){
 
 
         comThread->connection = connection;
-        connection->sendRequest("Hello Clion1");
-        connection->sendRequest("Hello Clion2");
-     //   connection->readRequest();
+
+        /*connection->sendRequest("Hello Clion1");
+        connection->sendRequest("Hello Clion2");*/
+
+        connection->sendRequest("Merhaba");
+        connection->readRequest();
+
+      //  connection->readRequest();
         comThread->start();
 
 
@@ -77,6 +83,7 @@ void MainWindow::on_btn_conn_clicked(){
         ui->tb_messages->append(e.what());
         ui->btn_conn->setEnabled(true);
     }
+
 }
 
 void MainWindow::on_btn_disconn_clicked(){
@@ -98,4 +105,49 @@ void MainWindow::on_btn_disconn_clicked(){
     }
 
     disableUI();
+}
+
+
+void MainWindow::on_xPositive_clicked()
+{
+    mutex.lock();
+    request = Constants::REQ_UPDATE_COORDS;
+    message.clear();
+    message.append(QString::number(request));
+    message.append(Constants::DELIMITER);
+    message.append("+x");
+    mutex.unlock();
+}
+
+void MainWindow::on_xNegative_clicked()
+{
+    mutex.lock();
+    request = Constants::REQ_UPDATE_COORDS;
+    message.clear();
+    message.append(QString::number(request));
+    message.append(Constants::DELIMITER);
+    message.append("-x");
+    mutex.unlock();
+}
+
+void MainWindow::on_yPositive_clicked()
+{
+    mutex.lock();
+    request = Constants::REQ_UPDATE_COORDS;
+    message.clear();
+    message.append(QString::number(request));
+    message.append(Constants::DELIMITER);
+    message.append("+y");
+    mutex.unlock();
+}
+
+void MainWindow::on_yNegative_clicked()
+{
+    mutex.lock();
+    request = Constants::REQ_UPDATE_COORDS;
+    message.clear();
+    message.append(QString::number(request));
+    message.append(Constants::DELIMITER);
+    message.append("-y");
+    mutex.unlock();
 }

@@ -43,6 +43,10 @@ private:
 private slots:
     void on_btn_conn_clicked();
     void on_btn_disconn_clicked();
+    void on_xNegative_clicked();
+    void on_xPositive_clicked();
+    void on_yPositive_clicked();
+    void on_yNegative_clicked();
 };
 
 #endif // MAINWINDOW_H

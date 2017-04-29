@@ -2,6 +2,7 @@
 #include "connection.h"
 
 
+
 using namespace std;
 
 Connection::Connection(const QString ip) throw (InvalidConnectionException)
@@ -27,14 +28,20 @@ Connection::~Connection(){
 
 
 void Connection::sendRequest(QString message) throw (exception){
-    int byte = tcpSocket->write(message.toStdString().c_str());
+    char array[250];
+    //bzero(array,250);
+    memset(array, 0, 250);
+    sprintf(array, "%s", message.toStdString().c_str());
+    int byte = tcpSocket->write(array);
     qDebug() << "Sended : " << message.toStdString().c_str();
     qDebug() << "Byte : " << byte;
+
+    tcpSocket->waitForBytesWritten();
 }
 
 void Connection::readRequest() throw (exception){
     QByteArray msg;
-    char buffer[50];
+    //char buffer[10];
     //bzero(buffer,50);
 
     while(!tcpSocket->waitForReadyRead(500));
