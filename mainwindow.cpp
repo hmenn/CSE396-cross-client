@@ -21,14 +21,52 @@ MainWindow::MainWindow(QWidget *parent) :
     /* Connection part */
     connection=NULL;
 
+    curr = new QPoint(0, 0);
+    next = new QPoint(0, 0);
 
+    // 0, 0 Upper Left of the w
+
+    scene = new QGraphicsScene(0,0,445,305);
+    ui->vp_route->setScene(scene);
+
+    QPen blackPen(QColor(50,50,50));
+    blackPen.setWidthF(0.2);
+
+    // Divide the paper into 8 parts
+    scene->addLine(0,153,445,153,blackPen);
+    scene->addLine(226,0,226,305,blackPen);
+    scene->addLine(113,0,113,305,blackPen);
+    scene->addLine(339,0,339,305,blackPen);
+
+    // Define the points in the array
+    // int array[] = {56, 229, 167, 229, 167, 76, 278, 76, 278, 229, 389, 229, 389, 76};
+    // int arraySize = 14;
 
 
 }
+
+void MainWindow::setPathPlot(QGraphicsScene *scene, QPoint *posCurrent, QPoint posNext){
+
+    QPen pen(QColor(200,0,0));
+    pen.setWidthF(0.6);
+    QBrush redBrush(QColor(200,0,0));
+
+    scene->addLine(posCurrent->x()/2, posCurrent->y()/2, posNext.x()/2, posCurrent->y()/2, pen);
+    posCurrent->setX(posNext.x());
+    scene->addLine(posCurrent->x()/2, posCurrent->y()/2, posCurrent->x()/2, posNext.y()/2, pen);
+    posCurrent->setY(posNext.y());
+
+    scene->addEllipse(posNext.x()/2, posNext.y()/2, 2, 2, pen, redBrush);
+}
+
 void MainWindow::updateCoordinates(){
-    cerr << " geidiiiiii " << xCoor;
     ui->xCoordinate->setText(QString::number(xCoor));
     ui->yCoordinate->setText(QString::number(yCoor));
+
+    next->setX(xCoor);
+    next->setY(yCoor);
+    // Draw a line between the curr and next points
+    setPathPlot(scene, curr, *next);
 }
 
 void MainWindow::disableUI(){
