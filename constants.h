@@ -9,6 +9,7 @@ public:
     static const int REQ_ASK_CURRENT_IMAGE=3;
     static const int REQ_ASK_CURRENT_COORDS=4;
     static const int REQ_UPDATE_COORDS=5;
+    static const int REQ_CHANGE_MODE=6;
 
     /* Messages */
     static const char DELIMITER=',';

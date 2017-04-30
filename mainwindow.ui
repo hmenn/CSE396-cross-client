@@ -210,7 +210,7 @@
     <property name="title">
      <string>Messages</string>
     </property>
-    <widget class="QTextBrowser" name="tb_messages">
+    <widget class="QTextBrowser" name="message_box">
      <property name="geometry">
       <rect>
        <x>0</x>
@@ -334,7 +334,7 @@
      <rect>
       <x>260</x>
       <y>0</y>
-      <width>221</width>
+      <width>271</width>
       <height>121</height>
      </rect>
     </property>
@@ -347,33 +347,20 @@
     <property name="title">
      <string>System</string>
     </property>
-    <widget class="QPushButton" name="pushButton_5">
+    <widget class="QPushButton" name="startButton">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>60</y>
+       <x>80</x>
+       <y>70</y>
        <width>89</width>
        <height>25</height>
       </rect>
      </property>
      <property name="text">
-      <string>Start</string>
+      <string>Change</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_6">
-     <property name="geometry">
-      <rect>
-       <x>120</x>
-       <y>60</y>
-       <width>89</width>
-       <height>25</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Stop</string>
-     </property>
-    </widget>
-    <widget class="QRadioButton" name="radioButton">
+    <widget class="QRadioButton" name="radioManuel">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -384,6 +371,22 @@
      </property>
      <property name="text">
       <string>Manual Mode</string>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="radioAutomatic">
+     <property name="geometry">
+      <rect>
+       <x>140</x>
+       <y>30</y>
+       <width>121</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Automatic Mode</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
      </property>
     </widget>
    </widget>

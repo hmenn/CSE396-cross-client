@@ -20,7 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     /* Connection part */
     connection=NULL;
-    ui->tb_messages->append("");
+
 
 
 
@@ -85,11 +85,13 @@ void MainWindow::on_btn_conn_clicked(){
 
         comThread->start();
 
+        ui->message_box->append("Connection is started automatic mode...");
+
 
         enableUI();
     }catch(exception &e){
         qDebug()<<e.what();
-        ui->tb_messages->append(e.what());
+        ui->message_box->append(e.what());
         ui->btn_conn->setEnabled(true);
     }
 
@@ -107,6 +109,8 @@ void MainWindow::on_btn_disconn_clicked(){
         delete connection;
         connection=NULL;
     }
+
+    ui->message_box->append("Disconnected from raspberry...");
 
     disableUI();
 }
@@ -176,5 +180,27 @@ void MainWindow::on_sendButton_clicked()
     message.append(ui->ledit_stepX->text());
     message.append(Constants::DELIMITER);
     message.append(ui->ledit_stepY->text());
+    mutex.unlock();
+}
+
+
+void MainWindow::on_startButton_clicked()
+{
+    mutex.lock();
+    if(ui->radioManuel->isChecked()){
+        request = Constants::REQ_CHANGE_MODE;
+        message.clear();
+        message.append(QString::number(request));
+        message.append(Constants::DELIMITER);
+        message.append(QString::number(1));
+        ui->message_box->append("Manual mode selected...");
+    }else if(ui->radioAutomatic->isChecked()){
+        request = Constants::REQ_CHANGE_MODE;
+        message.clear();
+        message.append(QString::number(request));
+        message.append(Constants::DELIMITER);
+        message.append(QString::number(0));
+        ui->message_box->append("Automatic mode selected...");
+    }
     mutex.unlock();
 }

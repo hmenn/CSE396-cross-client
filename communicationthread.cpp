@@ -86,6 +86,12 @@ void CommunicationThread::run()
 
             break;
 
+        case Constants::REQ_CHANGE_MODE:
+
+            connection->sendRequest(*message);
+
+             *request = Constants::REQ_ASK_CURRENT_COORDS;
+
         default:
             break;
         }

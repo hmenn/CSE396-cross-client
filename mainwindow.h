@@ -52,6 +52,7 @@ private slots:
     void on_yPositive_clicked();
     void on_yNegative_clicked();
     void on_sendButton_clicked();
+    void on_startButton_clicked();
 };
 
 #endif // MAINWINDOW_H
