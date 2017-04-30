@@ -42,13 +42,12 @@ MainWindow::MainWindow(QWidget *parent) :
     // int array[] = {56, 229, 167, 229, 167, 76, 278, 76, 278, 229, 389, 229, 389, 76};
     // int arraySize = 14;
 
-
 }
 
 void MainWindow::setPathPlot(QGraphicsScene *scene, QPoint *posCurrent, QPoint posNext){
 
     QPen pen(QColor(200,0,0));
-    pen.setWidthF(0.6);
+    pen.setWidthF(0.8);
     QBrush redBrush(QColor(200,0,0));
 
     scene->addLine(posCurrent->x()/2, posCurrent->y()/2, posNext.x()/2, posCurrent->y()/2, pen);
@@ -80,7 +79,8 @@ void MainWindow::enableUI(){
     ui->btn_conn->setEnabled(false);
     ui->btn_disconn->setEnabled(true);
     ui->grp_system->setEnabled(true);
-    ui->grp_steps->setEnabled(true);
+    ui->grp_steps->setEnabled(false);
+    ui->grp_system->setEnabled(true);
 }
 
 MainWindow::~MainWindow()
@@ -232,6 +232,7 @@ void MainWindow::on_startButton_clicked()
         message.append(Constants::DELIMITER);
         message.append(QString::number(1));
         ui->message_box->append("Manual mode selected...");
+        ui->grp_steps->setEnabled(true);
     }else if(ui->radioAutomatic->isChecked()){
         request = Constants::REQ_CHANGE_MODE;
         message.clear();
@@ -239,6 +240,7 @@ void MainWindow::on_startButton_clicked()
         message.append(Constants::DELIMITER);
         message.append(QString::number(0));
         ui->message_box->append("Automatic mode selected...");
+        ui->grp_steps->setEnabled(false);
     }
     mutex.unlock();
 }
