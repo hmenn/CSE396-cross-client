@@ -21,7 +21,8 @@ MainWindow::MainWindow(QWidget *parent) :
     /* Connection part */
     connection=NULL;
 
-
+    ui->xCoordinate->setReadOnly(true);
+    ui->yCoordinate->setReadOnly(true);
 
 
 }
@@ -42,7 +43,7 @@ void MainWindow::enableUI(){
     ui->btn_conn->setEnabled(false);
     ui->btn_disconn->setEnabled(true);
     ui->grp_system->setEnabled(true);
-    ui->grp_steps->setEnabled(true);
+  //  ui->grp_steps->setEnabled(true);
 }
 
 MainWindow::~MainWindow()
@@ -85,6 +86,8 @@ void MainWindow::on_btn_conn_clicked(){
 
         comThread->start();
 
+        ui->radioManuel->setChecked(false);
+        ui->radioAutomatic->setChecked(true);
         ui->message_box->append("Connection is started automatic mode...");
 
 
@@ -110,6 +113,7 @@ void MainWindow::on_btn_disconn_clicked(){
         connection=NULL;
     }
 
+
     ui->message_box->append("Disconnected from raspberry...");
 
     disableUI();
@@ -123,7 +127,7 @@ void MainWindow::on_xPositive_clicked()
     message.clear();
     message.append(QString::number(request));
     message.append(Constants::DELIMITER);
-    message.append("1");
+    message.append("20");
     message.append(Constants::DELIMITER);
     message.append("0");
 
@@ -137,7 +141,7 @@ void MainWindow::on_xNegative_clicked()
     message.clear();
     message.append(QString::number(request));
     message.append(Constants::DELIMITER);
-    message.append("-1");
+    message.append("-20");
     message.append(Constants::DELIMITER);
     message.append("0");
 
@@ -153,7 +157,7 @@ void MainWindow::on_yPositive_clicked()
     message.append(Constants::DELIMITER);
     message.append("0");
     message.append(Constants::DELIMITER);
-    message.append("1");
+    message.append("20");
     mutex.unlock();
 }
 
@@ -166,7 +170,7 @@ void MainWindow::on_yNegative_clicked()
     message.append(Constants::DELIMITER);
     message.append("0");
     message.append(Constants::DELIMITER);
-    message.append("-1");
+    message.append("-20");
     mutex.unlock();
 }
 
@@ -194,6 +198,7 @@ void MainWindow::on_startButton_clicked()
         message.append(Constants::DELIMITER);
         message.append(QString::number(1));
         ui->message_box->append("Manual mode selected...");
+        ui->grp_steps->setEnabled(true);
     }else if(ui->radioAutomatic->isChecked()){
         request = Constants::REQ_CHANGE_MODE;
         message.clear();
@@ -201,6 +206,7 @@ void MainWindow::on_startButton_clicked()
         message.append(Constants::DELIMITER);
         message.append(QString::number(0));
         ui->message_box->append("Automatic mode selected...");
+        ui->grp_steps->setEnabled(false);
     }
     mutex.unlock();
 }
