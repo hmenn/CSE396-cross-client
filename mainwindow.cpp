@@ -266,9 +266,18 @@ void MainWindow::keyPressEvent(QKeyEvent *event){
             on_xNegative_clicked();
         }else if(event->key() == Qt::Key_D){
             on_xPositive_clicked();
+        }else if(event->key() == Qt::Key_Backspace){
+            mutex.lock();
+            request = Constants::REQ_UPDATE_COORDS;
+            message.clear();
+            message.append(QString::number(request));
+            message.append(Constants::DELIMITER);
+            message.append("-1000");
+            message.append(Constants::DELIMITER);
+            message.append("-1000");
+            mutex.unlock();
         }
     }
-
 }
 
 
