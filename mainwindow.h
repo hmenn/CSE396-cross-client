@@ -26,7 +26,7 @@ private:
     void enableUI();
     void setPathPlot(QGraphicsScene *scene, QPoint *posCurrent, QPoint posNext);
     void keyPressEvent(QKeyEvent *event);
-
+    void closeEvent (QCloseEvent *event);
 
 
     Ui::MainWindow *ui;

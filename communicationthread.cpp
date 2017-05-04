@@ -55,7 +55,7 @@ void CommunicationThread::run()
             *request = Constants::REQ_ASK_CURRENT_COORDS;
 
             break;
-}
+        }
         case Constants::REQ_ASK_CURRENT_IMAGE:
 
             message->clear();
@@ -83,7 +83,7 @@ void CommunicationThread::run()
 
             connection->sendRequest(*message);
 
-             *request = Constants::REQ_ASK_CURRENT_COORDS;
+            *request = Constants::REQ_ASK_CURRENT_COORDS;
 
         default:
             break;
@@ -108,6 +108,8 @@ void CommunicationThread::run()
     }
     qDebug()<<"Thread quit";
 }
+
+
 /*
 void CommunicationThread::updateCoordinates(){
 
