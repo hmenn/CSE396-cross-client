@@ -171,6 +171,19 @@
       <string>Send</string>
      </property>
     </widget>
+    <widget class="QCheckBox" name="keyboardCheckBox">
+     <property name="geometry">
+      <rect>
+       <x>180</x>
+       <y>100</y>
+       <width>81</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Keyboard</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QGroupBox" name="grp_msg">
     <property name="geometry">
@@ -541,7 +554,7 @@
      <x>0</x>
      <y>0</y>
      <width>1041</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuCSE396">

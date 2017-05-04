@@ -21,15 +21,15 @@ MainWindow::MainWindow(QWidget *parent) :
     /* Connection part */
     connection=NULL;
 
-<<<<<<< HEAD
+
     ui->xCoordinate->setReadOnly(true);
     ui->yCoordinate->setReadOnly(true);
-=======
+
     curr = new QPoint(0, 0);
     next = new QPoint(0, 0);
 
     // 0, 0 Upper Left of the w
->>>>>>> origin/master
+
 
     scene = new QGraphicsScene(0,0,445,305);
     ui->vp_route->setScene(scene);
@@ -84,12 +84,10 @@ void MainWindow::enableUI(){
     ui->btn_conn->setEnabled(false);
     ui->btn_disconn->setEnabled(true);
     ui->grp_system->setEnabled(true);
-<<<<<<< HEAD
-  //  ui->grp_steps->setEnabled(true);
-=======
+
     ui->grp_steps->setEnabled(false);
     ui->grp_system->setEnabled(true);
->>>>>>> origin/master
+
 }
 
 MainWindow::~MainWindow()
@@ -256,3 +254,45 @@ void MainWindow::on_startButton_clicked()
     }
     mutex.unlock();
 }
+
+void MainWindow::keyPressEvent(QKeyEvent *event){
+
+    if(ui->grp_steps->isEnabled() && ui->keyboardCheckBox->isChecked()){
+        if(event->key() == Qt::Key_W){
+            on_yPositive_clicked();
+        }else if(event->key() == Qt::Key_S){
+            on_yNegative_clicked();
+        }else if(event->key() == Qt::Key_A){
+            on_xNegative_clicked();
+        }else if(event->key() == Qt::Key_D){
+            on_xPositive_clicked();
+        }
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

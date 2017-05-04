@@ -4,6 +4,7 @@
 #include <QGraphicsLineItem>
 #include <QMainWindow>
 #include <QMutex>
+#include <QKeyEvent>
 #include "communicationthread.h"
 #include "connection.h"
 #include "requirements.h"
@@ -24,6 +25,7 @@ private:
     void disableUI();
     void enableUI();
     void setPathPlot(QGraphicsScene *scene, QPoint *posCurrent, QPoint posNext);
+    void keyPressEvent(QKeyEvent *event);
 
 
 
