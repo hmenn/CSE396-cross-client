@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QGraphicsLineItem>
 #include <QMainWindow>
 #include <QMutex>
 #include "communicationthread.h"
@@ -22,6 +23,7 @@ public:
 private:
     void disableUI();
     void enableUI();
+    void setPathPlot(QGraphicsScene *scene, QPoint *posCurrent, QPoint posNext);
 
 
 
@@ -42,6 +44,11 @@ private:
     int xCoor;
     int yCoor;
 
+    // path frames
+    QGraphicsScene *scene;
+    QGraphicsLineItem *pathLine;
+    QPoint *curr;
+    QPoint *next;
 
 private slots:
     void updateCoordinates();
