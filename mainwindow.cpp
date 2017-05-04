@@ -21,6 +21,9 @@ MainWindow::MainWindow(QWidget *parent) :
     /* Connection part */
     connection=NULL;
 
+    QImage logo(":/images/gtuLogo500.png");
+    ui->gtuLogo->setPixmap(QPixmap::fromImage(logo.scaled(201,111)));
+
 
     ui->xCoordinate->setReadOnly(true);
     ui->yCoordinate->setReadOnly(true);

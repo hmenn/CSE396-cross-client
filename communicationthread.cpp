@@ -8,14 +8,13 @@ CommunicationThread::CommunicationThread(QObject* parent):QThread(parent)
 void CommunicationThread::run()
 {
     QByteArray msg;
-     char * coordinatesString;
 
     int delayCounter = 0;
 
     while(*request != Constants::REQ_CLOSE_CONNECTION){
 
         //delay as milliseconds
-        msleep(500);
+        msleep(100);
 
         //mutex lock
         mutex->lock();
@@ -23,23 +22,18 @@ void CommunicationThread::run()
         switch (*request) {
 
         case Constants::REQ_OPEN_CONNECTION:
-
             message->clear();
             message->append(QString::number(*request));
             message->append(Constants::DELIMITER);
-           // connection->sendRequest(*message);
 
             *request = Constants::REQ_ASK_CURRENT_COORDS;
-
             break;
 
         case Constants::REQ_CLOSE_CONNECTION:
-
             message->clear();
             message->append(QString::number(*request));
             message->append(Constants::DELIMITER);
             connection->sendRequest(*message);
-
             break;
 
         case Constants::REQ_ASK_CURRENT_COORDS:{
@@ -52,9 +46,8 @@ void CommunicationThread::run()
             connection->readRequest(&msg);
             QString str(msg);
             qDebug() << "Message byte array :" <<str;
-            //coordinatesString = msg.toStdString().c_str();
             sscanf(str.toStdString().c_str(), "%d%d", xCoordinate, yCoordinate);
-            qDebug() << "\ncorrrr :" << coordinatesString;
+            qDebug() << "\nCurrent coordinates: " << str;
 
             this->updateCoordinates();
             qDebug() << "\nX: " << *xCoordinate << "\nY: "<< *yCoordinate;
