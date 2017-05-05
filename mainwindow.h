@@ -5,6 +5,7 @@
 #include <QMainWindow>
 #include <QMutex>
 #include <QKeyEvent>
+#include <QSignalMapper>
 #include "communicationthread.h"
 #include "connection.h"
 #include "requirements.h"
@@ -53,6 +54,7 @@ private:
     QPoint *next;
 
 private slots:
+    void help();
     void updateCoordinates();
     void on_btn_conn_clicked();
     void on_btn_disconn_clicked();
@@ -62,6 +64,7 @@ private slots:
     void on_yNegative_clicked();
     void on_sendButton_clicked();
     void on_startButton_clicked();
+    void on_actionAbout_triggered();
 };
 
 #endif // MAINWINDOW_H

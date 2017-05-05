@@ -46,6 +46,11 @@ MainWindow::MainWindow(QWidget *parent) :
     scene->addLine(339,0,339,305,blackPen);
 }
 
+
+void MainWindow::help(){
+    qDebug()<<"Help";
+}
+
 void MainWindow::setPathPlot(QGraphicsScene *scene, QPoint *posCurrent, QPoint posNext){
 
     QPen pen(QColor(200,0,0));
@@ -104,6 +109,9 @@ void MainWindow::on_btn_conn_clicked(){
         ip = ui->ledit_ip->text();
         connection=new Connection(ip);
 
+        xCoor=0;
+        yCoor=0;
+
         // initialization message
         request = Constants::REQ_OPEN_CONNECTION;
         message.append(QString::number(request));
@@ -153,7 +161,6 @@ void MainWindow::on_btn_disconn_clicked(){
         delete connection;
         connection=NULL;
     }
-
 
     ui->message_box->append("Disconnected from raspberry...");
 
@@ -300,26 +307,7 @@ void MainWindow::closeEvent (QCloseEvent *event)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+void MainWindow::on_actionAbout_triggered()
+{
+   QMessageBox::about(this,"Group 5 Members","0.Hasan Men\n1.Ahmet Alperen Bulut\n2.İsa Eş\n3.Recep Sivri\n4.Furkan Erdöl\n5.Onur Sezer\n6.Helin Yıldırım\n7.Mehmed Mustafa");
+}
