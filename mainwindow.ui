@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1054</width>
+    <width>1049</width>
     <height>796</height>
    </rect>
   </property>
@@ -575,7 +575,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1054</width>
+     <width>1049</width>
      <height>22</height>
     </rect>
    </property>
@@ -585,13 +585,7 @@
     </property>
     <addaction name="actionAbout"/>
    </widget>
-   <widget class="QMenu" name="menuAbout">
-    <property name="title">
-     <string>About</string>
-    </property>
-   </widget>
    <addaction name="menuCSE396"/>
-   <addaction name="menuAbout"/>
   </widget>
   <action name="actionAbout">
    <property name="text">

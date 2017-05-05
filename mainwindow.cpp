@@ -13,6 +13,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    this->setFixedHeight(800);
+    this->setFixedWidth(1050);
     setWindowTitle("CSE 396 Project II");
 
     disableUI();
