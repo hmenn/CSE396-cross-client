@@ -1,6 +1,7 @@
 #include <iostream>
 #include <QProgressBar>
 #include <QProgressDialog>
+#include <QMessageBox>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "communicationthread.h"
@@ -22,6 +23,9 @@ MainWindow::MainWindow(QWidget *parent) :
     /* Connection part */
     connection=NULL;
 
+    QImage logo(":/images/gtuLogo500.png");
+    ui->gtuLogo->setPixmap(QPixmap::fromImage(logo.scaled(350,150)));
+
 
     ui->xCoordinate->setReadOnly(true);
     ui->yCoordinate->setReadOnly(true);
@@ -30,8 +34,6 @@ MainWindow::MainWindow(QWidget *parent) :
     next = new QPoint(0, 0);
 
     // 0, 0 Upper Left of the w
-
-
     scene = new QGraphicsScene(0,0,445,305);
     ui->vp_route->setScene(scene);
 
@@ -43,11 +45,6 @@ MainWindow::MainWindow(QWidget *parent) :
     scene->addLine(226,0,226,305,blackPen);
     scene->addLine(113,0,113,305,blackPen);
     scene->addLine(339,0,339,305,blackPen);
-
-    // Define the points in the array
-    // int array[] = {56, 229, 167, 229, 167, 76, 278, 76, 278, 229, 389, 229, 389, 76};
-    // int arraySize = 14;
-
 }
 
 void MainWindow::setPathPlot(QGraphicsScene *scene, QPoint *posCurrent, QPoint posNext){
@@ -56,12 +53,12 @@ void MainWindow::setPathPlot(QGraphicsScene *scene, QPoint *posCurrent, QPoint p
     pen.setWidthF(0.8);
     QBrush redBrush(QColor(200,0,0));
 
-    scene->addLine(posCurrent->x()/2, posCurrent->y()/2, posNext.x()/2, posCurrent->y()/2, pen);
+   /* scene->addLine(posCurrent->x()/2, posCurrent->y()/2, posNext.x()/2, posCurrent->y()/2, pen);
     posCurrent->setX(posNext.x());
-    scene->addLine(posCurrent->x()/2, posCurrent->y()/2, posCurrent->x()/2, posNext.y()/2, pen);
+    scene->addLine(posCurrent->x()/2, posCurrent->y()/2, posNext.x()/2, posNext.y()/2, pen);
     posCurrent->setY(posNext.y());
 
-    scene->addEllipse(posNext.x()/2, posNext.y()/2, 2, 2, pen, redBrush);
+    scene->addEllipse(posNext.x()/2, posNext.y()/2, 2, 2, pen, redBrush);*/
 }
 
 void MainWindow::updateCoordinates(){
@@ -225,12 +222,14 @@ void MainWindow::on_sendButton_clicked()
     request = Constants::REQ_UPDATE_COORDS;
     message.clear();
     message.append(QString::number(request));
+    // take x coordinate
     message.append(Constants::DELIMITER);
     if(ui->ledit_stepX->text().isEmpty())
-        message.append("0");
+
+       message.append("0");
     else
         message.append(ui->ledit_stepX->text());
-
+    // take y coordinate
     message.append(Constants::DELIMITER);
 
     if(ui->ledit_stepY->text().isEmpty())
@@ -286,6 +285,19 @@ void MainWindow::keyPressEvent(QKeyEvent *event){
             message.append("-1000");
             mutex.unlock();
         }
+    }
+}
+
+void MainWindow::closeEvent (QCloseEvent *event)
+{
+    QMessageBox::StandardButton resBtn = QMessageBox::question( this, "CSE396 Client",
+                                                                tr("Are you sure?\n"),QMessageBox::No | QMessageBox::Yes,
+                                                                QMessageBox::Yes);
+    if (resBtn != QMessageBox::Yes) {
+        event->ignore();
+    } else {
+        this->on_btn_disconn_clicked();
+        qDebug()<<"Successfully closed!!";
     }
 }
 
