@@ -585,7 +585,13 @@
     </property>
     <addaction name="actionAbout"/>
    </widget>
+   <widget class="QMenu" name="menuAbout">
+    <property name="title">
+     <string>About</string>
+    </property>
+   </widget>
    <addaction name="menuCSE396"/>
+   <addaction name="menuAbout"/>
   </widget>
   <action name="actionAbout">
    <property name="text">

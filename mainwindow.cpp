@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    setWindowTitle("CSE 396 Project II");
 
     disableUI();
 
@@ -231,11 +232,13 @@ void MainWindow::on_sendButton_clicked()
     // take x coordinate
     message.append(Constants::DELIMITER);
     if(ui->ledit_stepX->text().isEmpty())
+
        message.append("0");
     else
         message.append(ui->ledit_stepX->text());
     // take y coordinate
     message.append(Constants::DELIMITER);
+
     if(ui->ledit_stepY->text().isEmpty())
         message.append("0");
     else
