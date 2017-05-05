@@ -15,7 +15,7 @@ void CommunicationThread::run()
     while(*request != Constants::REQ_CLOSE_CONNECTION){
 
         //delay as milliseconds
-        msleep(500);
+        msleep(100);
 
         //mutex lock
         mutex->lock();

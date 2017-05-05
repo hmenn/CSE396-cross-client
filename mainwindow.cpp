@@ -12,6 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    setWindowTitle("CSE 396 Project II");
 
     disableUI();
 
@@ -225,9 +226,17 @@ void MainWindow::on_sendButton_clicked()
     message.clear();
     message.append(QString::number(request));
     message.append(Constants::DELIMITER);
-    message.append(ui->ledit_stepX->text());
+    if(ui->ledit_stepX->text().isEmpty())
+        message.append("0");
+    else
+        message.append(ui->ledit_stepX->text());
+
     message.append(Constants::DELIMITER);
-    message.append(ui->ledit_stepY->text());
+
+    if(ui->ledit_stepY->text().isEmpty())
+        message.append("0");
+    else
+        message.append(ui->ledit_stepY->text());
     mutex.unlock();
 }
 
