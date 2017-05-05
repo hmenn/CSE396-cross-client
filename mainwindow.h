@@ -29,6 +29,10 @@ private:
     void keyPressEvent(QKeyEvent *event);
     void closeEvent (QCloseEvent *event);
 
+    void printCoordinates(QGraphicsScene *scene);
+    void drawStickMan(QGraphicsScene *scene, qreal X, qreal Y, qreal headRadius, qreal degree);
+
+
 
     Ui::MainWindow *ui;
     Connection *connection;
