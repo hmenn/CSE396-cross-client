@@ -209,10 +209,10 @@ void MainWindow::updateCoordinates(){
     ui->xCoordinate->setText(QString::number(xCoor));
     ui->yCoordinate->setText(QString::number(yCoor));
 
-    next->setX(xCoor);
-    next->setY(yCoor);
+   // next->setX(xCoor);
+    //next->setY(yCoor);
     // Draw a line between the curr and next points
-    setPathPlot(scene, curr, *next);
+   // setPathPlot(scene, curr, *next);
 }
 
 void MainWindow::disableUI(){
