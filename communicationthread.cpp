@@ -12,10 +12,8 @@ void CommunicationThread::run()
     int delayCounter = 0;
 
     while(*request != Constants::REQ_CLOSE_CONNECTION){
-
         //delay as milliseconds
         msleep(300);
-
         //mutex lock
         mutex->lock();
 
@@ -42,11 +40,11 @@ void CommunicationThread::run()
             message->append(QString::number(*request));
             message->append(Constants::DELIMITER);
             connection->sendRequest(*message);
-
+            char temp;
             connection->readRequest(&msg);
             QString str(msg);
             qDebug() << "Message byte array :" <<str;
-            sscanf(str.toStdString().c_str(), "%d%d", xCoordinate, yCoordinate);
+            sscanf(str.toStdString().c_str(), "%d%c%d", xCoordinate,&temp, yCoordinate);
             qDebug() << "\nCurrent coordinates: " << str;
 
             this->updateCoordinates();
