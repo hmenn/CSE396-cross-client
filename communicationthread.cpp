@@ -13,7 +13,7 @@ void CommunicationThread::run()
 
     while(*request != Constants::REQ_CLOSE_CONNECTION){
         //delay as milliseconds
-        msleep(300);
+        sleep(1);
         //mutex lock
         mutex->lock();
 
@@ -39,13 +39,14 @@ void CommunicationThread::run()
             message->clear();
             message->append(QString::number(*request));
             message->append(Constants::DELIMITER);
-            connection->sendRequest(*message);
+
             char temp;
+            connection->sendRequest(*message);
+
             connection->readRequest(&msg);
+            qDebug() << "Message byte array :" <<msg;
             QString str(msg);
-            qDebug() << "Message byte array :" <<str;
             sscanf(str.toStdString().c_str(), "%d%c%d", xCoordinate,&temp, yCoordinate);
-            qDebug() << "\nCurrent coordinates: " << str;
 
             this->updateCoordinates();
             qDebug() << "\nX: " << *xCoordinate << "\nY: "<< *yCoordinate;
@@ -62,23 +63,21 @@ void CommunicationThread::run()
             connection->sendRequest(*message);
 
             connection->readRequest(&msg);
-            qDebug()<<msg;
             QString str(msg);
             int size;
             sscanf(str.toStdString().c_str(),"%d",&size);
             qDebug()<<"ReadSize:"<<size<<endl;
 
-            sleep(5);
             /*QByteArray test;
             QByteArray c;
             for(int i=0;i<size;++i){
                 connection->readRequest(&c);
                 test.append(c);
-            }*/
+            }
             //image will be saved into memory
             //necessary a loop here to takes the image
             //..
-
+            qDebug()<<"ByteArraySize:"<<test.size()<<endl;*/
             *request = Constants::REQ_ASK_CURRENT_COORDS;
 
             break;

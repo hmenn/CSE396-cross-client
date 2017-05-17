@@ -2,6 +2,8 @@
 #include <QProgressBar>
 #include <QProgressDialog>
 #include <QMessageBox>
+#include <unistd.h>
+#include <stdlib.h>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "requirements.h"
@@ -270,8 +272,17 @@ void MainWindow::on_btn_conn_clicked(){
 
         comThread->connection = connection;
 
-        //connection->sendRequest("Merhaba");
-        //connection->readRequest();
+        connection->sendRequest("H");
+        QString *str;
+        do{
+            sleep(1);
+        QByteArray arr;
+        connection->readRequest(&arr);
+        str = new QString(arr);
+        qDebug()<<str;
+
+        }while (strcmp(str->toStdString().c_str(),"S")!=0);
+        qDebug()<<"HandShake complete!"<<endl;
 
         comThread->start();
 

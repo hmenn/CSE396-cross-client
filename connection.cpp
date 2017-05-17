@@ -33,16 +33,28 @@ void Connection::sendRequest(QString message) throw (exception){
     sprintf(array, "%s", message.toStdString().c_str());
     int byte = tcpSocket->write(array);
     qDebug() << "Sended : " << message.toStdString().c_str();
-    qDebug() << "Byte : " << byte;
+    //qDebug() << "Byte : " << byte;
 
     tcpSocket->waitForBytesWritten();
 }
 
 void Connection::readRequest(QByteArray *msg) throw (exception){
     //QByteArray msg;
-    //while(!tcpSocket->waitForReadyRead(500));
+    /*while(tcpSocket->bytesAvailable()>0){
+        if(!tcpSocket->waitForReadyRead()){
+            qDebug() << "waitForReadyRead() timed out";
+        }
+        *msg = tcpSocket->read(10);
+        qDebug()<< *msg;
+    }*/
+
+    while(!tcpSocket->bytesAvailable());
+    if(!tcpSocket->waitForReadyRead()){
+        qDebug() << "waitForReadyRead() timed out";
+    }
+
     *msg = tcpSocket->read(10);
-    qDebug()<< *msg;
+    qDebug()<<"ReadReq" <<*msg;
 }
 
 
