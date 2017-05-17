@@ -54,13 +54,27 @@ void CommunicationThread::run()
 
             break;
         }
-        case Constants::REQ_ASK_CURRENT_IMAGE:
+        case Constants::REQ_ASK_CURRENT_IMAGE:{
 
             message->clear();
             message->append(QString::number(*request));
             message->append(Constants::DELIMITER);
             connection->sendRequest(*message);
 
+            connection->readRequest(&msg);
+            qDebug()<<msg;
+            QString str(msg);
+            int size;
+            sscanf(str.toStdString().c_str(),"%d",&size);
+            qDebug()<<"ReadSize:"<<size<<endl;
+
+            sleep(5);
+            /*QByteArray test;
+            QByteArray c;
+            for(int i=0;i<size;++i){
+                connection->readRequest(&c);
+                test.append(c);
+            }*/
             //image will be saved into memory
             //necessary a loop here to takes the image
             //..
@@ -68,7 +82,7 @@ void CommunicationThread::run()
             *request = Constants::REQ_ASK_CURRENT_COORDS;
 
             break;
-
+        }
         case Constants::REQ_UPDATE_COORDS:
 
             connection->sendRequest(*message);

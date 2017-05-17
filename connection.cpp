@@ -40,9 +40,7 @@ void Connection::sendRequest(QString message) throw (exception){
 
 void Connection::readRequest(QByteArray *msg) throw (exception){
     //QByteArray msg;
-
     //while(!tcpSocket->waitForReadyRead(500));
-
     *msg = tcpSocket->read(10);
     qDebug()<< *msg;
 }
