@@ -228,7 +228,7 @@ void MainWindow::updateCoordinates(){
 
     QImage image;
     image.loadFromData(arr);
-    ui->gtuLogo->setPixmap(QPixmap::fromImage(image));
+    ui->lbl_frame->setPixmap(QPixmap::fromImage(image));
 }
 
 void MainWindow::disableUI(){
@@ -324,9 +324,6 @@ void MainWindow::on_btn_disconn_clicked(){
     }
 
     ui->message_box->append("Disconnected from raspberry...");
-
-
-
 
 
     disableUI();

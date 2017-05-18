@@ -8,12 +8,12 @@ CommunicationThread::CommunicationThread(QObject* parent):QThread(parent)
 void CommunicationThread::run()
 {
     QByteArray msg;
-
+    char array[100000];
 
     int delayCounter = 0;
     while(*request != Constants::REQ_CLOSE_CONNECTION){
         //delay as milliseconds
-        sleep(1);
+        usleep(300000);
         cerr<<"Thread run"<<endl;
         //mutex lock
         mutex->lock();
@@ -58,16 +58,16 @@ void CommunicationThread::run()
             int size;
             sscanf(r,"%d",&size);
             qDebug()<<"Size:"<<size;
-            usleep(1000000);
+            usleep(1000);
             int a = 0;
 
 
-            char array[size];
+
 
             for(int i = 0; i<size; ++i){
                 r = conH->readSocket(1);
                 a+=strlen(r);
-                if(a == 0){
+                if(r[0] == 0){
                     array[i] = '\0';
                 }
                 array[i] = r[0];
@@ -75,11 +75,15 @@ void CommunicationThread::run()
                 qDebug()<<"BuffSize"<<a;
 
             }
-            image->clear();
 
-           for(int i=0; i<size;++i){
-                image->append(array[i]);
-           }
+            if(size > 0){
+                image->clear();
+
+               for(int i=0; i<size;++i){
+                    image->append(array[i]);
+               }
+            }
+
 
 
            cerr << "size" << image->size();

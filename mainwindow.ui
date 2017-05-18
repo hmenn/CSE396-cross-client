@@ -427,7 +427,7 @@
       <x>540</x>
       <y>380</y>
       <width>490</width>
-      <height>360</height>
+      <height>331</height>
      </rect>
     </property>
     <property name="font">
@@ -439,14 +439,17 @@
     <property name="title">
      <string>Camera Frames</string>
     </property>
-    <widget class="QGraphicsView" name="vp_frame">
+    <widget class="QLabel" name="lbl_frame">
      <property name="geometry">
       <rect>
-       <x>30</x>
+       <x>20</x>
        <y>30</y>
-       <width>450</width>
-       <height>310</height>
+       <width>461</width>
+       <height>281</height>
       </rect>
+     </property>
+     <property name="text">
+      <string/>
      </property>
     </widget>
    </widget>
