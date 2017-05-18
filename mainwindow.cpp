@@ -9,6 +9,8 @@
 #include "requirements.h"
 #include "communicationthread.h"
 
+QByteArray arr;
+
 using namespace std;
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -223,6 +225,10 @@ void MainWindow::updateCoordinates(){
     next->setY(yCoor);
     // Draw a line between the curr and next points
     setPathPlot(scene, curr, *next);
+
+    QImage image;
+    image.loadFromData(arr);
+    ui->gtuLogo->setPixmap(QPixmap::fromImage(image));
 }
 
 void MainWindow::disableUI(){
@@ -273,6 +279,7 @@ void MainWindow::on_btn_conn_clicked(){
         comThread->message = message;
         comThread->xCoordinate = &this->xCoor;
         comThread->yCoordinate = &this->yCoor;
+        comThread->image = &arr;
 
         hours = 0; minutes = 0; seconds = 0;
         TimerRunning = true;
@@ -317,6 +324,10 @@ void MainWindow::on_btn_disconn_clicked(){
     }
 
     ui->message_box->append("Disconnected from raspberry...");
+
+
+
+
 
     disableUI();
 }
@@ -395,6 +406,8 @@ void MainWindow::on_sendButton_clicked()
 
     sprintf(message,"%d,%d,%d",request,x,y);
     mutex.unlock();
+
+
 }
 
 

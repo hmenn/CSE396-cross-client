@@ -13,11 +13,13 @@
 #include <QTime>
 #include <QPixmap>
 
-
+extern QByteArray arr;
 
 namespace Ui {
 class MainWindow;
 }
+
+
 
 class MainWindow : public QMainWindow
 {
@@ -64,6 +66,7 @@ private:
     QPoint *curr;
     QPoint *next;
     QTimer *timer;
+
 
 private slots:
     void help();

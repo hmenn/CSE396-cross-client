@@ -23,6 +23,7 @@ public:
 
     Connection *connection;
     ConnectionHelper *conH;
+    QByteArray *image;
 
     int* xCoordinate;
     int* yCoordinate;
