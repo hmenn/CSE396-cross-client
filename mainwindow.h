@@ -35,11 +35,10 @@ private:
 
 
     Ui::MainWindow *ui;
-    Connection *connection;
+    ConnectionHelper *connH;
 
-    //QChar data[10];
     QMutex mutex;
-    QString message;
+    char message [Constants::MIN_BUFFER_SIZE];
     int request;
 
     CommunicationThread *comThread;

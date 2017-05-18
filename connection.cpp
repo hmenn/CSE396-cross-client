@@ -27,11 +27,9 @@ Connection::~Connection(){
 }
 
 
-void Connection::sendRequest(QString message) throw (exception){
-    char array[250];
-    memset(array, 0, 250);
-    sprintf(array, "%s", message.toStdString().c_str());
-    int byte = tcpSocket->write(array);
+void Connection::sendRequest(const char *message) throw (exception){
+
+    int byte = tcpSocket->write(message);
     qDebug() << "Sended : " << message.toStdString().c_str();
     //qDebug() << "Byte : " << byte;
 

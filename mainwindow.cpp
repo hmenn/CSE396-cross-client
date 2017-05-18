@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     this->setFixedHeight(800);
-    this->setFixedWidth(1050);
+    this->setFixedWidth(1040);
     setWindowTitle("CSE 396 Project II");
 
     disableUI();
@@ -27,11 +27,18 @@ MainWindow::MainWindow(QWidget *parent) :
     yCoor =0;
 
     /* Connection part */
-    connection=NULL;
+    connH = NULL;
 
     QImage logo(":/images/gtuLogo500.png");
     ui->gtuLogo->setPixmap(QPixmap::fromImage(logo.scaled(350,150)));
 
+    // Set Horizontal ruler to the ui
+    QPixmap rulerH(":/images/RulerH.png");
+    ui->rulerH->setPixmap(rulerH);
+
+    // Set Vertical ruler to the ui
+    QPixmap rulerV(":/images/RulerV.png");
+    ui->rulerV->setPixmap(rulerV);
 
     ui->xCoordinate->setReadOnly(true);
     ui->yCoordinate->setReadOnly(true);
@@ -73,9 +80,6 @@ void MainWindow::drawStickMan(QGraphicsScene *scene, qreal X, qreal Y, qreal hea
     // Draw the head with center (X, Y)
     scene->addEllipse(circleX, circleY, headRadius, headRadius, pen);
 
-
-
-
     // Calculate the body line
     qreal bSxD, bSyD, bFxD, bFyD;
 
@@ -84,8 +88,8 @@ void MainWindow::drawStickMan(QGraphicsScene *scene, qreal X, qreal Y, qreal hea
         bSyD = (Y + headRadius/2) - sin(radian)*headRadius/2;
     }
     else if(degree < 90 && degree >0){
-         bSxD = (X + headRadius/1.4) - cos(radian)*headRadius/2;
-         bSyD = (Y + headRadius/1.4) - sin(radian)*headRadius/2;
+        bSxD = (X + headRadius/1.4) - cos(radian)*headRadius/2;
+        bSyD = (Y + headRadius/1.4) - sin(radian)*headRadius/2;
     }
     else if(degree == 180){
         bSxD = (X + headRadius/2) + cos(radian)*headRadius/2;
@@ -169,20 +173,20 @@ void MainWindow::printCoordinates(QGraphicsScene *scene){
     // Print X coordinates
     int longLine;
     for(int i=0; i<450; i+=5){
-       if(i%20 == 0 && i!=0)
-           longLine = 20;
-       else
-           longLine = 5;
+        if(i%20 == 0 && i!=0)
+            longLine = 20;
+        else
+            longLine = 5;
 
-       scene->addLine(i, 0, i, longLine, bluePen);
+        scene->addLine(i, 0, i, longLine, bluePen);
     }
 
     // Print Y coordinates
     for(int i=0; i<310; i+=5){
         if(i%20 == 0 && i!=0)
-          longLine = 20;
+            longLine = 20;
         else
-          longLine = 5;
+            longLine = 5;
 
         scene->addLine(0, i, longLine, i, redPen);
     }
@@ -199,7 +203,7 @@ void MainWindow::setPathPlot(QGraphicsScene *scene, QPoint *posCurrent, QPoint p
     pen.setWidthF(0.8);
     QBrush redBrush(QColor(200,0,0));
 
-     scene->addLine(posCurrent->x()/2, posCurrent->y()/2, posNext.x()/2, posCurrent->y()/2, pen);
+    scene->addLine(posCurrent->x()/2, posCurrent->y()/2, posNext.x()/2, posCurrent->y()/2, pen);
     posCurrent->setX(posNext.x());
     scene->addLine(posCurrent->x()/2, posCurrent->y()/2, posNext.x()/2, posNext.y()/2, pen);
     posCurrent->setY(posNext.y());
@@ -210,11 +214,11 @@ void MainWindow::setPathPlot(QGraphicsScene *scene, QPoint *posCurrent, QPoint p
 void MainWindow::updateCoordinates(){
     ui->xCoordinate->setText(QString::number(xCoor));
     ui->yCoordinate->setText(QString::number(yCoor));
-//haritalama
+    //haritalama
     next->setX(xCoor);
     next->setY(yCoor);
     // Draw a line between the curr and next points
-   setPathPlot(scene, curr, *next);
+    setPathPlot(scene, curr, *next);
 }
 
 void MainWindow::disableUI(){
@@ -238,8 +242,8 @@ MainWindow::~MainWindow()
 {
     delete ui;
 
-    if(connection!=NULL)
-        delete connection;
+    if(connH!=NULL)
+        delete connH;
     //delete comThread;
 }
 
@@ -249,68 +253,53 @@ void MainWindow::on_btn_conn_clicked(){
     try{
         //throw InvalidConnectionException();
         ip = ui->ledit_ip->text();
-        connection=new Connection(ip);
+
+        connH= new ConnectionHelper();
 
         xCoor=0;
         yCoor=0;
 
         // initialization message
         request = Constants::REQ_OPEN_CONNECTION;
-        message.append(QString::number(request));
-        message.append(Constants::DELIMITER);
-        //qDebug() << message.toStdString().c_str();
+        sprintf(message,"%d",QString::number(request));
 
-        /* initialize connection thread */
         comThread = new CommunicationThread(this);
         comThread->mutex = &mutex;
         comThread->request = &request;
-        comThread->message = &message;
+        comThread->message = message;
         comThread->xCoordinate = &this->xCoor;
         comThread->yCoordinate = &this->yCoor;
 
         connect(comThread,SIGNAL(updateCoordinates()),this,SLOT(updateCoordinates()));
 
-        comThread->connection = connection;
 
-        connection->sendRequest("H");
-        QString *str;
-        do{
-            sleep(1);
-        QByteArray arr;
-        connection->readRequest(&arr);
-        str = new QString(arr);
-        qDebug()<<str;
-
-        }while (strcmp(str->toStdString().c_str(),"S")!=0);
-        qDebug()<<"HandShake complete!"<<endl;
+        connH->handShake();
+        comThread->conH = connH;
 
         comThread->start();
-
+        cerr<<"Test"<<endl;
         ui->radioManuel->setChecked(false);
         ui->radioAutomatic->setChecked(true);
         ui->message_box->append("Connection is started automatic mode...");
-
-
         enableUI();
     }catch(exception &e){
         qDebug()<<e.what();
         ui->message_box->append(e.what());
         ui->btn_conn->setEnabled(true);
     }
-
 }
 
 void MainWindow::on_btn_disconn_clicked(){
 
-    if(connection!=NULL){
+    if(connH!=NULL){
         mutex.lock();
         request = Constants::REQ_CLOSE_CONNECTION;
         mutex.unlock();
 
         //delete connection;
         while(comThread->isRunning());
-        delete connection;
-        connection=NULL;
+        delete connH;
+        connH=NULL;
     }
 
     ui->message_box->append("Disconnected from raspberry...");
@@ -323,13 +312,8 @@ void MainWindow::on_xPositive_clicked()
 {
     mutex.lock();
     request = Constants::REQ_UPDATE_COORDS;
-    message.clear();
-    message.append(QString::number(request));
-    message.append(Constants::DELIMITER);
-    message.append("20");
-    message.append(Constants::DELIMITER);
-    message.append("0");
-
+    bzero(message,Constants::MIN_BUFFER_SIZE);
+    sprintf(message,"X=20,Y=0.");
     mutex.unlock();
 }
 
@@ -337,13 +321,8 @@ void MainWindow::on_xNegative_clicked()
 {
     mutex.lock();
     request = Constants::REQ_UPDATE_COORDS;
-    message.clear();
-    message.append(QString::number(request));
-    message.append(Constants::DELIMITER);
-    message.append("-20");
-    message.append(Constants::DELIMITER);
-    message.append("0");
-
+    bzero(message,Constants::MIN_BUFFER_SIZE);
+    sprintf(message,"X=-20,Y=0.");
     mutex.unlock();
 }
 
@@ -351,12 +330,8 @@ void MainWindow::on_yPositive_clicked()
 {
     mutex.lock();
     request = Constants::REQ_UPDATE_COORDS;
-    message.clear();
-    message.append(QString::number(request));
-    message.append(Constants::DELIMITER);
-    message.append("0");
-    message.append(Constants::DELIMITER);
-    message.append("20");
+    bzero(message,Constants::MIN_BUFFER_SIZE);
+    sprintf(message,"X=0,Y=20.");
     mutex.unlock();
 }
 
@@ -364,12 +339,8 @@ void MainWindow::on_yNegative_clicked()
 {
     mutex.lock();
     request = Constants::REQ_UPDATE_COORDS;
-    message.clear();
-    message.append(QString::number(request));
-    message.append(Constants::DELIMITER);
-    message.append("0");
-    message.append(Constants::DELIMITER);
-    message.append("-20");
+    bzero(message,Constants::MIN_BUFFER_SIZE);
+    sprintf(message,"X=0,Y=-20.");
     mutex.unlock();
 }
 
@@ -377,22 +348,20 @@ void MainWindow::on_sendButton_clicked()
 {
     mutex.lock();
     request = Constants::REQ_UPDATE_COORDS;
-    message.clear();
-    message.append(QString::number(request));
+    bzero(message,Constants::MIN_BUFFER_SIZE);
+
+    int x,y;
     // take x coordinate
-    message.append(Constants::DELIMITER);
     if(ui->ledit_stepX->text().isEmpty())
-
-        message.append("0");
+        x=0;
     else
-        message.append(ui->ledit_stepX->text());
+        x =  ui->ledit_stepX->text().toInt();
     // take y coordinate
-    message.append(Constants::DELIMITER);
-
     if(ui->ledit_stepY->text().isEmpty())
-        message.append("0");
+        y = 0;
     else
-        message.append(ui->ledit_stepY->text());
+        y = ui->ledit_stepY->text().toInt();
+    sprintf(message,"%d,%d,%d",request,x,y);
     mutex.unlock();
 }
 
@@ -400,20 +369,17 @@ void MainWindow::on_sendButton_clicked()
 void MainWindow::on_startButton_clicked()
 {
     mutex.lock();
+    bzero(message,Constants::MIN_BUFFER_SIZE);
     if(ui->radioManuel->isChecked()){
         request = Constants::REQ_CHANGE_MODE;
-        message.clear();
-        message.append(QString::number(request));
-        message.append(Constants::DELIMITER);
-        message.append(QString::number(1));
+        sprintf(message,"%d,1",request);
         ui->message_box->append("Manual mode selected...");
         ui->grp_steps->setEnabled(true);
     }else if(ui->radioAutomatic->isChecked()){
         request = Constants::REQ_CHANGE_MODE;
-        message.clear();
-        message.append(QString::number(request));
-        message.append(Constants::DELIMITER);
-        message.append(QString::number(0));
+        sprintf(message,"%d,0",request);
+        ui->message_box->append("Manual mode selected...");
+        ui->grp_steps->setEnabled(true);
         ui->message_box->append("Automatic mode selected...");
         ui->grp_steps->setEnabled(false);
     }
@@ -434,12 +400,8 @@ void MainWindow::keyPressEvent(QKeyEvent *event){
         }else if(event->key() == Qt::Key_Backspace){
             mutex.lock();
             request = Constants::REQ_UPDATE_COORDS;
-            message.clear();
-            message.append(QString::number(request));
-            message.append(Constants::DELIMITER);
-            message.append("-1000");
-            message.append(Constants::DELIMITER);
-            message.append("-1000");
+            bzero(message,Constants::MIN_BUFFER_SIZE);
+            sprintf(message,"%d,-1000,-1000",request);
             mutex.unlock();
         }
     }

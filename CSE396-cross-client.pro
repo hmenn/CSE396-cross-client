@@ -26,14 +26,14 @@ RESOURCES += res.qrc
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    connection.cpp \
-    communicationthread.cpp
+    communicationthread.cpp \
+    ConnectionHelper.cpp
 
 HEADERS  += mainwindow.h \
-    connection.h \
     exceptions396.h \
     requirements.h \
     constants.h \
     communicationthread.h \
+    ConnectionHelper.h
 
 FORMS    += mainwindow.ui

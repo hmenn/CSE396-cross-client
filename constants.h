@@ -17,6 +17,8 @@ public:
 
     /*Connection*/
     static const int PORT=3965;
+
+    static const int MIN_BUFFER_SIZE=50;
 };
 
 #endif // CONSTANTS_H

@@ -5,6 +5,7 @@
 #include <QMutex>
 #include "connection.h"
 #include "requirements.h"
+#include "ConnectionHelper.h"
 
 
 class CommunicationThread : public QThread
@@ -17,10 +18,11 @@ public:
 
 
     QMutex *mutex;
-    QString *message;
+    char *message;
     int *request;
 
     Connection *connection;
+    ConnectionHelper *conH;
 
     int* xCoordinate;
     int* yCoordinate;

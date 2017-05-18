@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1049</width>
-    <height>796</height>
+    <width>1040</width>
+    <height>800</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -424,10 +424,10 @@
    <widget class="QGroupBox" name="grp_frame">
     <property name="geometry">
      <rect>
-      <x>550</x>
-      <y>370</y>
-      <width>471</width>
-      <height>351</height>
+      <x>540</x>
+      <y>380</y>
+      <width>490</width>
+      <height>360</height>
      </rect>
     </property>
     <property name="font">
@@ -442,10 +442,10 @@
     <widget class="QGraphicsView" name="vp_frame">
      <property name="geometry">
       <rect>
-       <x>10</x>
+       <x>30</x>
        <y>30</y>
        <width>450</width>
-       <height>311</height>
+       <height>310</height>
       </rect>
      </property>
     </widget>
@@ -455,8 +455,8 @@
      <rect>
       <x>550</x>
       <y>10</y>
-      <width>471</width>
-      <height>351</height>
+      <width>490</width>
+      <height>360</height>
      </rect>
     </property>
     <property name="font">
@@ -471,11 +471,99 @@
     <widget class="QGraphicsView" name="vp_route">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>30</y>
+       <x>30</x>
+       <y>40</y>
        <width>450</width>
        <height>310</height>
       </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="rulerH">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>20</y>
+       <width>451</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
+     <property name="text">
+      <string>0   1   2   3   4    5   6   7   8   9  10  11  12  13 14 15  16 17  18 19  20 21 22 23 24 25 26 27</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="rulerV">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>1</x>
+       <y>40</y>
+       <width>20</width>
+       <height>311</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>231</height>
+      </size>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="inputMethodHints">
+      <set>Qt::ImhMultiLine</set>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="lineWidth">
+      <number>1</number>
+     </property>
+     <property name="midLineWidth">
+      <number>0</number>
+     </property>
+     <property name="text">
+      <string>0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23</string>
+     </property>
+     <property name="textFormat">
+      <enum>Qt::PlainText</enum>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
      </property>
     </widget>
    </widget>
@@ -560,6 +648,25 @@
      </property>
     </widget>
    </widget>
+   <widget class="QPushButton" name="btn_stopTimer">
+    <property name="geometry">
+     <rect>
+      <x>320</x>
+      <y>420</y>
+      <width>101</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Stop Timer</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -575,8 +682,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1049</width>
-     <height>22</height>
+     <width>1040</width>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuCSE396">
