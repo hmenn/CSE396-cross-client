@@ -61,6 +61,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     printCoordinates(scene);
 
+    hours = 0; minutes = 0; seconds = 0;
+    TimerRunning = true;
+
+
     //drawStickMan(scene, 80, 80, 20, 0);
     //drawStickMan(scene, 150, 80, 20, 90);
 }
@@ -270,6 +274,12 @@ void MainWindow::on_btn_conn_clicked(){
         comThread->xCoordinate = &this->xCoor;
         comThread->yCoordinate = &this->yCoor;
 
+        hours = 0; minutes = 0; seconds = 0;
+        TimerRunning = true;
+        timer = new QTimer(this);
+        connect(timer, SIGNAL(timeout()), this, SLOT(updateTime()));
+        timer->start(1000);
+
         connect(comThread,SIGNAL(updateCoordinates()),this,SLOT(updateCoordinates()));
 
 
@@ -300,6 +310,10 @@ void MainWindow::on_btn_disconn_clicked(){
         while(comThread->isRunning());
         delete connH;
         connH=NULL;
+
+       TimerRunning=false;
+       delete timer;
+       timer=NULL;
     }
 
     ui->message_box->append("Disconnected from raspberry...");
@@ -313,7 +327,7 @@ void MainWindow::on_xPositive_clicked()
     mutex.lock();
     request = Constants::REQ_UPDATE_COORDS;
     bzero(message,Constants::MIN_BUFFER_SIZE);
-    sprintf(message,"X=20,Y=0.");
+    sprintf(message,"%d,20,0", request);
     mutex.unlock();
 }
 
@@ -322,7 +336,7 @@ void MainWindow::on_xNegative_clicked()
     mutex.lock();
     request = Constants::REQ_UPDATE_COORDS;
     bzero(message,Constants::MIN_BUFFER_SIZE);
-    sprintf(message,"X=-20,Y=0.");
+    sprintf(message,"%d,-20,0", request);
     mutex.unlock();
 }
 
@@ -331,7 +345,7 @@ void MainWindow::on_yPositive_clicked()
     mutex.lock();
     request = Constants::REQ_UPDATE_COORDS;
     bzero(message,Constants::MIN_BUFFER_SIZE);
-    sprintf(message,"X=0,Y=20.");
+    sprintf(message,"%d,0,20", request);
     mutex.unlock();
 }
 
@@ -340,8 +354,25 @@ void MainWindow::on_yNegative_clicked()
     mutex.lock();
     request = Constants::REQ_UPDATE_COORDS;
     bzero(message,Constants::MIN_BUFFER_SIZE);
-    sprintf(message,"X=0,Y=-20.");
+    sprintf(message,"%d,0,-20", request);
     mutex.unlock();
+}
+
+void MainWindow::updateTime(){
+    if(TimerRunning){
+        ++seconds;
+        if(seconds == 60){
+            seconds = 0;
+            ++minutes;
+        }
+        if(minutes == 60){
+            minutes = 0;
+            ++hours;
+        }
+
+        QTime time = QTime(hours, minutes, seconds);
+        ui->timerLabel->setText(time.toString());
+    }
 }
 
 void MainWindow::on_sendButton_clicked()
@@ -361,6 +392,7 @@ void MainWindow::on_sendButton_clicked()
         y = 0;
     else
         y = ui->ledit_stepY->text().toInt();
+
     sprintf(message,"%d,%d,%d",request,x,y);
     mutex.unlock();
 }

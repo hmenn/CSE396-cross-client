@@ -466,7 +466,7 @@
      </font>
     </property>
     <property name="title">
-     <string>Route</string>
+     <string>Route - Centimeter</string>
     </property>
     <widget class="QGraphicsView" name="vp_route">
      <property name="geometry">
@@ -648,23 +648,28 @@
      </property>
     </widget>
    </widget>
-   <widget class="QPushButton" name="btn_stopTimer">
+   <widget class="QLabel" name="timerLabel">
     <property name="geometry">
      <rect>
       <x>320</x>
-      <y>420</y>
-      <width>101</width>
+      <y>410</y>
+      <width>201</width>
       <height>51</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <weight>75</weight>
-      <bold>true</bold>
+      <pointsize>24</pointsize>
      </font>
     </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
+    </property>
     <property name="text">
-     <string>Stop Timer</string>
+     <string/>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
     </property>
    </widget>
   </widget>
@@ -683,7 +688,7 @@
      <x>0</x>
      <y>0</y>
      <width>1040</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuCSE396">

@@ -9,6 +9,11 @@
 #include "communicationthread.h"
 #include "connection.h"
 #include "requirements.h"
+#include <QTimer>
+#include <QTime>
+#include <QPixmap>
+
+
 
 namespace Ui {
 class MainWindow;
@@ -29,10 +34,13 @@ private:
     void keyPressEvent(QKeyEvent *event);
     void closeEvent (QCloseEvent *event);
 
+
+
     void printCoordinates(QGraphicsScene *scene);
     void drawStickMan(QGraphicsScene *scene, qreal X, qreal Y, qreal headRadius, qreal degree);
 
-
+    bool TimerRunning;
+    int hours, minutes, seconds;
 
     Ui::MainWindow *ui;
     ConnectionHelper *connH;
@@ -55,6 +63,7 @@ private:
     QGraphicsLineItem *pathLine;
     QPoint *curr;
     QPoint *next;
+    QTimer *timer;
 
 private slots:
     void help();
@@ -68,6 +77,7 @@ private slots:
     void on_sendButton_clicked();
     void on_startButton_clicked();
     void on_actionAbout_triggered();
+    void updateTime();
 };
 
 #endif // MAINWINDOW_H
