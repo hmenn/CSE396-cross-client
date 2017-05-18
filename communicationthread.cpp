@@ -1,4 +1,5 @@
 #include "communicationthread.h"
+#include "mainwindow.h"
 
 CommunicationThread::CommunicationThread(QObject* parent):QThread(parent)
 {
@@ -13,7 +14,7 @@ void CommunicationThread::run()
     int delayCounter = 0;
     while(*request != Constants::REQ_CLOSE_CONNECTION){
         //delay as milliseconds
-        usleep(300000);
+        usleep(400000);
         cerr<<"Thread run"<<endl;
         //mutex lock
         mutex->lock();
@@ -32,11 +33,14 @@ void CommunicationThread::run()
         case Constants::REQ_ASK_CURRENT_COORDS:{
             bzero(message,Constants::MIN_BUFFER_SIZE);
             char temp;
+            int angle;
             QString str = QString::number(*request);
             conH->writeSocket(str.toStdString().c_str());
 
             char * r = conH->readSocket(10);
             sscanf(r, "%d%c%d", xCoordinate,&temp, yCoordinate);
+
+
 
             this->updateCoordinates();
             qDebug() << "\nX: " << *xCoordinate << "\nY: "<< *yCoordinate;
@@ -72,7 +76,7 @@ void CommunicationThread::run()
                 }
                 array[i] = r[0];
 
-                qDebug()<<"BuffSize"<<a;
+                //qDebug()<<"BuffSize"<<a;
 
             }
 

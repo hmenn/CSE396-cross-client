@@ -14,6 +14,7 @@
 #include <QPixmap>
 
 extern QByteArray arr;
+extern int foundAngle;
 
 namespace Ui {
 class MainWindow;

@@ -10,6 +10,7 @@
 #include "communicationthread.h"
 
 QByteArray arr;
+int foundAngle;
 
 using namespace std;
 
@@ -235,6 +236,16 @@ void MainWindow::updateCoordinates(){
     QImage image;
     image.loadFromData(arr);
     ui->lbl_frame->setPixmap(QPixmap::fromImage(image));
+
+    /*if(foundAngle!=-1){
+        QString str;
+        str.append("Found angle:");
+        str.append(foundAngle);
+        ui->message_box->append(str);
+
+    }*/
+
+
 }
 
 void MainWindow::disableUI(){
