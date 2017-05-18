@@ -446,7 +446,9 @@ void MainWindow::on_startButton_clicked()
         ui->grp_steps->setEnabled(true);
         ui->message_box->append("Automatic mode selected...");
         ui->grp_steps->setEnabled(false);
+
     }
+    setVPRouteArea();
     mutex.unlock();
 }
 

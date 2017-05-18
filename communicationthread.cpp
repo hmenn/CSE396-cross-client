@@ -117,7 +117,7 @@ void CommunicationThread::run()
         case Constants::REQ_CHANGE_MODE:
 
             conH->writeSocket(message);
-
+             image->clear();
             *request = Constants::REQ_ASK_CURRENT_COORDS;
 
         default:
