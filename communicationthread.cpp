@@ -37,13 +37,14 @@ void CommunicationThread::run()
             QString str = QString::number(*request);
             conH->writeSocket(str.toStdString().c_str());
 
-            char * r = conH->readSocket(10);
-            sscanf(r, "%d%c%d", xCoordinate,&temp, yCoordinate);
+            char * r = conH->readSocket(Constants::MIN_BUFFER_SIZE);
+            sscanf(r, "%d%c%d%c%d%c", xCoordinate,&temp, yCoordinate,&temp,&angle,&temp);
 
-
+           // sscanf(r, "%d%c%d", xCoordinate,&temp, yCoordinate);
 
             this->updateCoordinates();
-            qDebug() << "\nX: " << *xCoordinate << "\nY: "<< *yCoordinate;
+            qDebug() << "\nX: " << *xCoordinate << "\nY: "<< *yCoordinate<<"<\n" << angle;
+            foundAngle=angle;
             // not necessary
             *request = Constants::REQ_ASK_CURRENT_COORDS;
 
@@ -57,7 +58,7 @@ void CommunicationThread::run()
 
             conH->writeSocket(str.toStdString().c_str());
 
-            char * r = conH->readSocket(10);
+            char * r = conH->readSocket(Constants::MIN_BUFFER_SIZE);
             cerr<<"Here\n";
             int size;
             sscanf(r,"%d",&size);

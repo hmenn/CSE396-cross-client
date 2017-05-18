@@ -10,7 +10,7 @@
 #include "communicationthread.h"
 
 QByteArray arr;
-int foundAngle;
+int foundAngle=-1;
 
 using namespace std;
 
@@ -78,12 +78,13 @@ void MainWindow::setVPRouteArea(){
     ui->vp_route->setScene(scene);
 }
 
-void MainWindow::drawStickMan(QGraphicsScene *scene, qreal X, qreal Y, qreal headRadius, qreal degree){
+void MainWindow::drawStickMan(QGraphicsScene *scene, qreal X1, qreal Y1, qreal headRadius, qreal degree){
     QPen pen(QColor(0, 0, 0));
     pen.setWidthF(2.0);
     QPen greenPen(QColor(0, 255, 0));
     greenPen.setWidthF(2.0);
-
+    qreal X=X1/1.56;
+    qreal Y=Y1/1.68;
     // Find the center coordinates of the head
     qreal circleX = X-headRadius/2;
     qreal circleY = Y-headRadius/2;
@@ -236,14 +237,16 @@ void MainWindow::updateCoordinates(){
     QImage image;
     image.loadFromData(arr);
     ui->lbl_frame->setPixmap(QPixmap::fromImage(image));
-
-    /*if(foundAngle!=-1){
+    qDebug()<<"found:"<<foundAngle;
+    if(foundAngle!=-1){
         QString str;
         str.append("Found angle:");
-        str.append(foundAngle);
-        ui->message_box->append(str);
+        str.append(QString::number(foundAngle));
 
-    }*/
+        ui->message_box->append(str);
+        drawStickMan(scene,xCoor,yCoor,20,foundAngle);
+        //foundAngle=-1;
+    }
 
 
 }
