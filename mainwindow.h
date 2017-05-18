@@ -35,6 +35,7 @@ private:
     void setPathPlot(QGraphicsScene *scene, QPoint *posCurrent, QPoint posNext);
     void keyPressEvent(QKeyEvent *event);
     void closeEvent (QCloseEvent *event);
+    void setVPRouteArea();
 
 
 

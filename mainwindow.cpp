@@ -48,9 +48,20 @@ MainWindow::MainWindow(QWidget *parent) :
     curr = new QPoint(0, 0);
     next = new QPoint(0, 0);
 
+    setVPRouteArea();
+
+    hours = 0; minutes = 0; seconds = 0;
+    TimerRunning = true;
+
+
+    //drawStickMan(scene, 80, 80, 20, 0);
+    //drawStickMan(scene, 150, 80, 20, 90);
+}
+
+void MainWindow::setVPRouteArea(){
     // 0, 0 Upper Left of the w
     scene = new QGraphicsScene(0,0,445,305);
-    ui->vp_route->setScene(scene);
+
 
     QPen blackPen(QColor(50,50,50));
     blackPen.setWidthF(0.2);
@@ -63,12 +74,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     printCoordinates(scene);
 
-    hours = 0; minutes = 0; seconds = 0;
-    TimerRunning = true;
-
-
-    //drawStickMan(scene, 80, 80, 20, 0);
-    //drawStickMan(scene, 150, 80, 20, 90);
+    ui->vp_route->setScene(scene);
 }
 
 void MainWindow::drawStickMan(QGraphicsScene *scene, qreal X, qreal Y, qreal headRadius, qreal degree){
@@ -298,6 +304,8 @@ void MainWindow::on_btn_conn_clicked(){
         ui->radioManuel->setChecked(false);
         ui->radioAutomatic->setChecked(true);
         ui->message_box->append("Connection is started automatic mode...");
+
+        setVPRouteArea();
         enableUI();
     }catch(exception &e){
         qDebug()<<e.what();
@@ -318,9 +326,9 @@ void MainWindow::on_btn_disconn_clicked(){
         delete connH;
         connH=NULL;
 
-       TimerRunning=false;
-       delete timer;
-       timer=NULL;
+        TimerRunning=false;
+        delete timer;
+        timer=NULL;
     }
 
     ui->message_box->append("Disconnected from raspberry...");
