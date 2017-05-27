@@ -80,17 +80,25 @@ void MainWindow::setVPRouteArea(){
 
 void MainWindow::drawStickMan(QGraphicsScene *scene, qreal X1, qreal Y1, qreal headRadius, qreal degree){
     QPen pen(QColor(0, 0, 0));
+    degree-=90;
+    if(degree<0)
+    {
+        degree=360+degree;
+    }
+    //qreal temp=degree-90;
     pen.setWidthF(2.0);
     QPen greenPen(QColor(0, 255, 0));
     greenPen.setWidthF(2.0);
-    qreal X=X1/1.56;
-    qreal Y=Y1/1.68;
+    qreal X=X1/1.60;
+    qreal Y=Y1/1.70;
+
     // Find the center coordinates of the head
     qreal circleX = X-headRadius/2;
     qreal circleY = Y-headRadius/2;
     qreal lineLength = (headRadius/10)*15;
     qreal radian = (degree*PI)/180.0;
-
+    qDebug()<<"mehmet "<<X1<<" "<<Y1;
+    qDebug()<<"mehmet "<<X<<" "<<Y;
     // Draw the head with center (X, Y)
     scene->addEllipse(circleX, circleY, headRadius, headRadius, pen);
 
@@ -216,13 +224,13 @@ void MainWindow::setPathPlot(QGraphicsScene *scene, QPoint *posCurrent, QPoint p
     QPen pen(QColor(200,0,0));
     pen.setWidthF(0.8);
     QBrush redBrush(QColor(200,0,0));
-
-    scene->addLine(posCurrent->x()/2, posCurrent->y()/2, posNext.x()/2, posCurrent->y()/2, pen);
+    qreal oranX=1.59,oranY=1.70;
+    scene->addLine(posCurrent->x()/oranX, posCurrent->y()/oranY, posNext.x()/oranX, posCurrent->y()/oranY, pen);
     posCurrent->setX(posNext.x());
-    scene->addLine(posCurrent->x()/2, posCurrent->y()/2, posNext.x()/2, posNext.y()/2, pen);
+    scene->addLine(posCurrent->x()/oranX, posCurrent->y()/oranY, posNext.x()/oranX, posNext.y()/oranY, pen);
     posCurrent->setY(posNext.y());
 
-    scene->addEllipse(posNext.x()/2, posNext.y()/2, 2, 2, pen, redBrush);
+    scene->addEllipse(posNext.x()/oranX, posNext.y()/oranY, 2, 2, pen, redBrush);
 }
 
 void MainWindow::updateCoordinates(){
