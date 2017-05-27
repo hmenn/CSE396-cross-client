@@ -315,7 +315,7 @@
       </font>
      </property>
      <property name="text">
-      <string>127.0.0.1</string>
+      <string/>
      </property>
     </widget>
     <widget class="QLineEdit" name="ledit_port">

@@ -14,8 +14,10 @@
 using namespace std;
 
 
-ConnectionHelper::ConnectionHelper() {
+ConnectionHelper::ConnectionHelper(QString ip,QString port) {
 
+    this->port=port;
+    this->ip=ip;
     listenfd = socket(AF_INET, SOCK_STREAM, 0);
     if (listenfd < 0) {
         throw  SocketCreationException(CREATE_ERROR);
@@ -23,9 +25,10 @@ ConnectionHelper::ConnectionHelper() {
 
     bzero((char *) &serv_addr, sizeof(serv_addr));
     serv_addr.sin_family = AF_INET;
-    serv_addr.sin_port = htons(3965);
+    serv_addr.sin_port = htons(atoi(port.toStdString().c_str()));
     serv_addr.sin_addr.s_addr = INADDR_ANY;
 
+    inet_pton(AF_INET,ip.toStdString().c_str(),&serv_addr.sin_addr);
 
     if( connect(listenfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0)
     {

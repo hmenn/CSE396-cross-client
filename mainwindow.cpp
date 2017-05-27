@@ -288,11 +288,13 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_btn_conn_clicked(){
     QString ip;
+    QString port;
     try{
         //throw InvalidConnectionException();
         ip = ui->ledit_ip->text();
+        port = ui->ledit_port->text();
 
-        connH= new ConnectionHelper();
+        connH= new ConnectionHelper( ip, port);
 
         xCoor=0;
         yCoor=0;
