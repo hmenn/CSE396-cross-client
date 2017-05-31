@@ -1,0 +1,7 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="/">
+    <file>images/gtuLogo500.png</file>
+    <file>images/RulerH.png</file>
+    <file>images/RulerV.png</file>
+</qresource>
+</RCC>
